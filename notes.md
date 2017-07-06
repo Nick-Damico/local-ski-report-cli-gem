@@ -35,7 +35,7 @@ user type : ‘4’
 
 | # of Trails   | # Trails Open | Snow Fall  |
 | ------------- |:-------------:| ----------:|
-| 10            | 5             | $1600      |
+| 10            | 5             | 18"      |
   
 ```
 “ Type:  “More” to view list of State Resorts again, “new” to search other states, or ‘quite’ to exit program: “
