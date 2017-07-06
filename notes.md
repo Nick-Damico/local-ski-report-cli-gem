@@ -43,7 +43,7 @@ user type : ‘4’
 
 ## 5. Stub out interface
 
-Currently building out a few methods inside LocalSkiReport::CLI 
+## Currently building out a few methods inside LocalSkiReport::CLI 
     1. #list_regions = Gives user a list of regions with ski areas or resorts
     2. #list_states = Gives user a list of states within the selected regions
     3. Need #method to take user selected state and retrieve a list of ski areas and resorts from <http://www.onthesnow.com>, user will select ski area using a number and a final report will be displayed.
