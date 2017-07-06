@@ -1,0 +1,5 @@
+#!/user/bin/env ruby
+
+require_relative "../config/environment"
+
+LocalSkiReport::CLI.new.call
