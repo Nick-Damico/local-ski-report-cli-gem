@@ -12,8 +12,14 @@
 
 
 ## 1. Plan your gem
-- A command line interface for ski resort reports in your specified state.
+- A CLI for listing Ski Reports for Ski Areas and Resorts in US.
 
+
+## 2 - 4 Proj. Structure, Create Entry Point from bin/ski_report, Start building CLI interface.
+
+- Project setup using ```bundle gem local_ski_report``` 
+- Setup Env file in ```config/environment.rb```
+ 
 ```
 User types ‘local-ski-report’
 ```
@@ -35,7 +41,7 @@ user type : ‘4’
 
 | Resort Name     | Status    | New Snow  | Base Depth | Lifts Open |
 | --------------- |:---------:| :--------:| :--------: | ---------: |
-| Ober Gatlinburg | Closed  | 24 HR: 0" | N/A - N/A  | 0/4        |
+| Ober Gatlinburg | Closed    | 24 HR: 0" | N/A - N/A  | 0/4        |
 
 ```
 “ Type:  “More” to view list of State Resorts again, “new” to search other states, or ‘quite’ to exit program: “
