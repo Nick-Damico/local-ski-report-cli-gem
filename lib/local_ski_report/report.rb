@@ -1,0 +1,3 @@
+class LocalSkiReport::Report
+    
+end
