@@ -31,6 +31,8 @@ user type : ‘4’
 
 “Select one of the available Resorts to see most recent Ski Report: “
 1. Ober Gatlinburg
+
+
 | # of Trails   | # Trails Open | Snow Fall  |
 | ------------- |:-------------:| ----------:|
 | 10            | 5             | $1600      |
