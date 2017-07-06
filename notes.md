@@ -33,10 +33,10 @@ user type : ‘4’
 1. Ober Gatlinburg
 
 
-| # of Trails   | # Trails Open | Snow Fall  |
-| ------------- |:-------------:| ----------:|
-| 10            | 5             | 18"      |
-  
+| Resort Name     | Status    | New Snow  | Base Depth | Lifts Open |
+| --------------- |:---------:| :--------:| :--------: | ---------: |
+| Ober Gatlinburg | Closed  | 24 HR: 0" | N/A - N/A  | 0/4        |
+
 ```
 “ Type:  “More” to view list of State Resorts again, “new” to search other states, or ‘quite’ to exit program: “
 ```
