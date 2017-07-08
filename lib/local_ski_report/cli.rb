@@ -29,10 +29,8 @@ class LocalSkiReport::CLI
         
         puts "Which State would you like to check? type number: "
         selected_state = gets.chomp.to_i
-        
         list_resorts
-        puts "Which Ski Resort would you like info on? "
-        puts "Ober Gatlinburg - Closed - 0/4 Slopes Open - 0\" of New Snow Fall"
+       
         input = nil
         while input != "exit"
             puts "Type: 'more' to see detailed report, 'resort' to select New Resort, 'exit' to leave App."
@@ -54,9 +52,13 @@ class LocalSkiReport::CLI
     end
     
     def list_resorts
-        # Scrapper will get this info from site.
-        puts "1. Ober Gatlinburg"
-        puts "2. North Ridge Resort"
+         resorts = LocalSkiReport::Resorts.resorts
+         resorts.each_with_index { |r,i| puts "#{i+1}. #{r.name}" }
+         puts "Which Ski Resort would you like info on? "
+         user_pick = gets.chomp.to_i - 1
+         
+         puts "#{resorts[user_pick].name} -- Status: #{resorts[user_pick].status}."
+        
     end
     
     def list_regions
