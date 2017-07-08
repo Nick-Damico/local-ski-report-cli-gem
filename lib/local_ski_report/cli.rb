@@ -11,29 +11,52 @@ class LocalSkiReport::CLI
     ]
     
     def call
+        greeting
+        menu
+        exit_msg
+    end
+    
+    def greeting    
+        puts "Welcome to Local Ski Report gem"
+    end
+    
+    def menu
+        puts "Find your Local Ski Report:"
+        list_regions
+        puts "Which region would you like to check? type number: "
+        x = gets.chomp.to_i
+        list_states(x)
+        
+        puts "Which State would you like to check? type number: "
+        selected_state = gets.chomp.to_i
+        
+        list_resorts
+        puts "Which Ski Resort would you like info on? "
+        puts "Ober Gatlinburg - Closed - 0/4 Slopes Open - 0\" of New Snow Fall"
         input = nil
-        while input != 'exit'    
-            puts "Find your Local Ski Report:"
-            list_regions
-            puts "Which region would you like to check? type number: "
-            x = gets.chomp.to_i
-            list_states(x)
-            puts "Which State would you like to check? type number: "
-            selected_state = gets.chomp.to_i
-            # This user Response will be used to make a request
-            puts "1. Ober Gatlinburg"
-            puts "2. North Ridge Resort"
-            puts "Which Ski Resort would you like info on? "
-            puts "Ober Gatlinburg - Closed - 0/4 Slopes Open - 0\" of New Snow Fall"
-            puts "Type: 'more' to see detailed report, 'new' to select New Resort, 'exit' to leave App."
+        while input != "exit"
+            puts "Type: 'more' to see detailed report, 'resort' to select New Resort, 'exit' to leave App."
             input = gets.strip.downcase
-            if input == "new"
-                self.call
-            elsif input == "more"
-                puts "More info Report..."
+            case input
+            when "resort"
+                menu
+            when "more"
+                more_info
+            else 
+                puts "Not sure what you want, type 'resort' for a new search or 'exit'"
             end
         end
-        exit_msg
+    end
+    
+    def more_info
+        # Scrapper will get this info from site.
+        puts "More info on selected resort..."
+    end
+    
+    def list_resorts
+        # Scrapper will get this info from site.
+        puts "1. Ober Gatlinburg"
+        puts "2. North Ridge Resort"
     end
     
     def list_regions
