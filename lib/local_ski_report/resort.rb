@@ -1,5 +1,5 @@
 class   LocalSkiReport::Resort
-    attr_accessor :name, :url, :report_update, :status, :new_snow, :base, :number_lifts, :lifts_open
+    attr_accessor :name, :url, :status, :number_lifts
     
     def self.resorts
         # Scrapper will get this info from site.
