@@ -57,7 +57,7 @@ class LocalSkiReport::CLI
          puts "Which Ski Resort would you like info on? "
          user_pick = gets.chomp.to_i - 1
          
-         puts "#{resorts[user_pick].name} -- Status: #{resorts[user_pick].status}."
+         puts "#{resort[user_pick].name} -- Status: #{resort[user_pick].status}."
         
     end
     

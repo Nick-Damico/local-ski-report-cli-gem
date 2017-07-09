@@ -1,4 +1,4 @@
-class   LocalSkiReport::Resorts
+class   LocalSkiReport::Resort
     attr_accessor :name, :url, :report_update, :status, :new_snow, :base, :number_lifts, :lifts_open
     
     def self.resorts
