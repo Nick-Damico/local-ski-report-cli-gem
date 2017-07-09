@@ -1,5 +1,13 @@
 class   LocalSkiReport::Resort
-    attr_accessor :name, :url, :status, :number_lifts
+    attr_accessor :name, :url, :location, :lifts
+    
+    @@all = []
+    
+    def initialize(name, location)
+        @name = name
+        @location
+        @@all << self
+    end
     
     def self.resorts
         # Scrapper will get this info from site.
