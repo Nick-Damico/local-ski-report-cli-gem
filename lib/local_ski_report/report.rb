@@ -1,6 +1,8 @@
 class LocalSkiReport::Report
-    attr_accessor :resort, :url, :last_updated, :lifts_open, :new_snow, :base
+    attr_accessor :date, :resort, :url, :lifts_open, :new_snow, :base
     
-    
+    def initialize(date)
+        @date = date
+    end
     
 end
