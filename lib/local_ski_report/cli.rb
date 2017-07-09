@@ -23,6 +23,7 @@ class LocalSkiReport::CLI
     def menu
         puts "Find your Local Ski Report:"
         list_regions
+        # binding.pry
         puts "Which region would you like to check? type number: "
         x = gets.chomp.to_i
         list_states(x)
@@ -52,12 +53,12 @@ class LocalSkiReport::CLI
     end
     
     def list_resorts
-         resorts = LocalSkiReport::Resorts.resorts
+         resorts = LocalSkiReport::Resort.resorts
          resorts.each_with_index { |r,i| puts "#{i+1}. #{r.name}" }
          puts "Which Ski Resort would you like info on? "
          user_pick = gets.chomp.to_i - 1
          
-         puts "#{resort[user_pick].name} -- Status: #{resort[user_pick].status}."
+         puts "#{resorts[user_pick].name} -- Status: #{resorts[user_pick].status}."
         
     end
     
