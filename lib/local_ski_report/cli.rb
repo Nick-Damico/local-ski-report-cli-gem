@@ -57,7 +57,7 @@ class LocalSkiReport::CLI
     end
     
     def list_resorts(state)
-        LocalSkiReport::Scrapper(url)
+        LocalSkiReport::Scraper(url)
         resorts = LocalSkiReport::Resort.all
         resorts.each_with_index { |r,i| puts "#{i+1}. #{r.name}" }
         puts "Select a Resort or Area for the latest Ski Report: "
