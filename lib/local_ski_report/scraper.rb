@@ -1,0 +1,3 @@
+class LocalSkiReport::Scrapper
+    
+end
