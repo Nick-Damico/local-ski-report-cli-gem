@@ -63,8 +63,9 @@ class LocalSkiReport::CLI
         puts "Select a Resort or Area for the latest Ski Report: "
         user_pick = gets.chomp.to_i - 1
         resort = resorts[user_pick]
-         
-        puts "#{resorts.name} -- Status: #{resorts.status}."
+            
+        # Need this to be formatted in tabular data, try out Terminal-Table
+        puts "#{resort.name} -- Location: #{resort.location} --  -- Status: #{resort.status}."
         
     end
     
