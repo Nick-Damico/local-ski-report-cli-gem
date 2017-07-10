@@ -18,20 +18,24 @@ class LocalSkiReport::CLI
     
     def greeting    
         puts "Welcome to Local Ski Report gem"
+        puts "Find your Local Ski Report:"
     end
     
     def menu
-        puts "Find your Local Ski Report:"
         list_regions
-        # binding.pry
         puts "Which region would you like to check? type number: "
-        x = gets.chomp.to_i
-        list_states(x)
+        region_num = gets.chomp.to_i - 1
         
+        list_states(region_num)
         puts "Which State would you like to check? type number: "
-        selected_state = gets.chomp.to_i
-        list_resorts
-       
+        state_num = gets.chomp.to_i - 1
+        
+        # Improve later with a look up method #find
+        user_region = STATES_WITH_RESORTS[region_num].keys[0]  #Get :symbol name
+        user_state = STATES_WITH_RESORTS[region_num][user_region][state_num] #Get users choosen State Regions Array
+   
+        list_resorts(user_state) #user_state will be used to direct Scraper to user requested state page.
+   
         input = nil
         while input != "exit"
             puts "Type: 'more' to see detailed report, 'resort' to select New Resort, 'exit' to leave App."
@@ -52,13 +56,15 @@ class LocalSkiReport::CLI
         puts "More info on selected resort..."
     end
     
-    def list_resorts
-         resorts = LocalSkiReport::Resort.resorts
-         resorts.each_with_index { |r,i| puts "#{i+1}. #{r.name}" }
-         puts "Which Ski Resort would you like info on? "
-         user_pick = gets.chomp.to_i - 1
+    def list_resorts(state)
+        LocalSkiReport::Scrapper(url)
+        resorts = LocalSkiReport::Resort.all
+        resorts.each_with_index { |r,i| puts "#{i+1}. #{r.name}" }
+        puts "Select a Resort or Area for the latest Ski Report: "
+        user_pick = gets.chomp.to_i - 1
+        resort = resorts[user_pick]
          
-         puts "#{resorts[user_pick].name} -- Status: #{resorts[user_pick].status}."
+        puts "#{resorts.name} -- Status: #{resorts.status}."
         
     end
     
