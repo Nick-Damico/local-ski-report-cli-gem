@@ -57,15 +57,14 @@ class LocalSkiReport::CLI
     end
     
     def list_resorts(state)
-        LocalSkiReport::Scraper.scrap_resorts_page(state)
-        resorts = LocalSkiReport::Resort.all
+        resorts = LocalSkiReport::Scraper.scrap_resorts_page(state)
         resorts.each_with_index { |r,i| puts "#{i+1}. #{r.name}" }
         puts "Select a Resort or Area for the latest Ski Report: "
         user_pick = gets.chomp.to_i - 1
         resort = resorts[user_pick]
             
         # Need this to be formatted in tabular data, try out Terminal-Table
-        puts "#{resort.name} -- Location: #{resort.location} --  -- Status: #{resort.status}."
+        puts "#{resort.name} -- Location: #{resort.location} -- Status: #{resort.reports.first.status}."
         
     end
     
