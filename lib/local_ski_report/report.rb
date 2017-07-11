@@ -1,5 +1,5 @@
 class LocalSkiReport::Report
-    attr_accessor :date, :resort, :url, :lifts_open, :new_snow, :base
+    attr_accessor :date, :url, :status, :new_snow, :base, :lifts_open, :resort
     
     @@all = []
     

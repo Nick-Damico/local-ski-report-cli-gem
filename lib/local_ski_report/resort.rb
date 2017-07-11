@@ -1,9 +1,10 @@
 class   LocalSkiReport::Resort
-    attr_accessor :name, :url, :location, :lifts
+    attr_accessor :name, :url, :location, :lifts, :reports
     
     @@all = []
     
     def initialize
+        @reports = []
         @@all << self
     end
     
