@@ -1,6 +1,8 @@
 # Our CLI Controller
 class LocalSkiReport::CLI
     
+    attr_accessor :resort
+    
     STATES_WITH_RESORTS = [
         { :midwest => ["Illinois", "Indiana", "Iowa", "Kansas", "Michigan", "Minnesota", "Missouri", "Ohio","Wisconsin"] },
         { :northeast => ["Connecticut", "Maine", "Massachusets", "New Hampshire", "New Jersey", "New York", "Pennsylvania", "Rhode Island", "Vermont"] },
@@ -34,8 +36,13 @@ class LocalSkiReport::CLI
         user_region = STATES_WITH_RESORTS[region_num].keys[0]  #Get :symbol name
         user_state = STATES_WITH_RESORTS[region_num][user_region][state_num].downcase.gsub(" ", "-") #Get users choosen State Regions Array
 
-        list_resorts(user_state) #user_state will be used to direct Scraper to user requested state page.
-   
+        resort_list = list_resorts(user_state) #user_state will be used to direct Scraper to user requested state page.
+        puts "Select a Resort or Area for the latest Ski Report: "
+        user_pick = gets.chomp.to_i - 1
+        
+        @resort = resort_list[user_pick]
+        build_table
+        
         input = nil
         while input != "exit"
             puts "Type: 'more' to see detailed report, 'resort' to select New Resort, 'exit' to leave App."
@@ -51,21 +58,10 @@ class LocalSkiReport::CLI
         end
     end
     
-    def more_info
-        # Scrapper will get this info from site.
-        puts "More info on selected resort..."
-    end
-    
     def list_resorts(state)
         resorts = LocalSkiReport::Scraper.scrap_resorts_page(state)
         resorts.each_with_index { |r,i| puts "#{i+1}. #{r.name}" }
-        puts "Select a Resort or Area for the latest Ski Report: "
-        user_pick = gets.chomp.to_i - 1
-        resort = resorts[user_pick]
-            
-        # Need this to be formatted in tabular data, try out Terminal-Table
-        puts "#{resort.name} -- Location: #{resort.location} -- Status: #{resort.reports.first.status}."
-        
+        resorts
     end
     
     def list_regions
@@ -82,6 +78,21 @@ class LocalSkiReport::CLI
         STATES_WITH_RESORTS[user_request].each_value do |states|
             states.each_with_index { |state, i| puts "#{i+1}. #{state}" }
         end
+    end
+    
+    def more_info
+        # Scrapper will get this info from site.
+        puts "More info on selected resort..."
+    end
+    
+    def build_table
+        # Need to fix lifts/lifts_open
+        # Alignment of cells might need tweeaked
+        report = @resort.reports[0]
+        rows = []
+        rows << [resort.name, report.status, report.new_snow, report.base, "#{report.lifts_open}/#{resort.lifts}"]
+        table = Terminal::Table.new :title => "Ski Report", :headings => ['Resort Name', 'Status', 'New Snow', 'Base Depth', 'Lifts Open'], :rows => rows
+        puts table
     end
     
     def exit_msg
