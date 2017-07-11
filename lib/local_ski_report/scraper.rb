@@ -9,9 +9,14 @@ class LocalSkiReport::Scraper
         url = "http://www.onthesnow.com/#{state_url}/skireport.html"
         doc = self.get_page(url)
         table = doc.css('table')
-        rows = table.css('tr')
+        table_rows = table.css('tr')
+        tr_of_resorts = table_rows.slice(2, table_rows.size - 3)
+        # rows is capturing an array of node_lists
+        # each element is a <tr>
+        # the first (2) rows are empty of info, and the last
+        # are removed using .slice then the rest are iterated over below.
         
-        rows.collect do |resort|
+        tr_of_resorts.collect do |resort|
             # Build Resort Object
             new_resort = LocalSkiReport::Resort.new
             new_resort.name = resort.css('td div.name').text
