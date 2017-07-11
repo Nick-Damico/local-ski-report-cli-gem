@@ -32,8 +32,8 @@ class LocalSkiReport::CLI
         
         # Improve later with a look up method #find
         user_region = STATES_WITH_RESORTS[region_num].keys[0]  #Get :symbol name
-        user_state = STATES_WITH_RESORTS[region_num][user_region][state_num] #Get users choosen State Regions Array
-   
+        user_state = STATES_WITH_RESORTS[region_num][user_region][state_num].downcase.gsub(" ", "-") #Get users choosen State Regions Array
+
         list_resorts(user_state) #user_state will be used to direct Scraper to user requested state page.
    
         input = nil
@@ -57,7 +57,7 @@ class LocalSkiReport::CLI
     end
     
     def list_resorts(state)
-        LocalSkiReport::Scraper(url)
+        LocalSkiReport::Scraper.scrap_resorts_page(state)
         resorts = LocalSkiReport::Resort.all
         resorts.each_with_index { |r,i| puts "#{i+1}. #{r.name}" }
         puts "Select a Resort or Area for the latest Ski Report: "
