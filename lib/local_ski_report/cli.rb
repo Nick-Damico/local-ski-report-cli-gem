@@ -31,10 +31,8 @@ class LocalSkiReport::CLI
         list_states(region_num)
         puts "Which State would you like to check? type number: "
         state_num = gets.chomp.to_i - 1
-        
-        # Improve later with a look up method #find
-        user_region = STATES_WITH_RESORTS[region_num].keys[0]  #Get :symbol name
-        user_state = STATES_WITH_RESORTS[region_num][user_region][state_num].downcase.gsub(" ", "-") #Get users choosen State Regions Array
+        user_region = get_region(region_num) #gets region :key
+        user_state = get_state(region_num, user_region, state_num) #gets state "string"
 
         resort_list = list_resorts(user_state) #user_state will be used to direct Scraper to user requested state page.
         puts "Select a Resort or Area for the latest Ski Report: "
@@ -56,6 +54,14 @@ class LocalSkiReport::CLI
                 puts "Not sure what you want, type 'resort' for a new search or 'exit'"
             end
         end
+    end
+    
+    def get_region(num)
+        STATES_WITH_RESORTS[num].keys[0]
+    end
+    
+    def get_state(reg_num, user_reg, st_num)
+        STATES_WITH_RESORTS[reg_num][user_reg][st_num].downcase.gsub(" ", "-") #Get users choosen State Regions Array
     end
     
     def list_resorts(state)
