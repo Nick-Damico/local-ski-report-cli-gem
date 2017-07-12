@@ -27,8 +27,10 @@ class LocalSkiReport::Scraper
         end
     end
     
-    def self.scrap_report_page(report_url)
-        doc = self.get_page(report_url)
+    def self.scrap_report_page(report, report_url)
+        url = "http://www.onthesnow.com#{report_url}"
+        doc = self.get_page(url)
+        report.get_xt_report_info(doc)
     end
     
 end
