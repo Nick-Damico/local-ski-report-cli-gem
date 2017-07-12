@@ -95,7 +95,7 @@ class LocalSkiReport::CLI
         # Alignment of cells might need tweeaked
         report = @resort.reports[0]
         rows = []
-        rows << [resort.name, report.status, report.new_snow, report.base, "#{report.lifts_open}/#{resort.lifts}"]
+        rows << [resort.name, report.status,{:value => report.new_snow, :alignment => :center},{:value => report.base, :alignment => :center}, {:value => "#{report.lifts_open}/#{resort.lifts}", :alignment => :right}]
         table = Terminal::Table.new :title => "Ski Report", :headings => ['Resort Name', 'Status', 'New Snow', 'Base Depth', 'Lifts Open'], :rows => rows
         puts table
     end
