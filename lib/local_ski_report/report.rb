@@ -41,8 +41,8 @@ class LocalSkiReport::Report
     
     def report(resort)
         rows = []
-        rows << [resort.name, self.status,{:value => self.new_snow, :alignment => :center},{:value => self.base, :alignment => :center}, {:value => "#{self.lifts_open}/#{resort.lifts}", :alignment => :right}]
-        Terminal::Table.new :title => "Ski Report", :headings => ['Resort Name', 'Status', 'New Snow', 'Base Depth', 'Lifts Open'], :rows => rows
+        rows << [resort.name,{:value => self.date, :alignment => :center}, self.status,{:value => self.new_snow, :alignment => :center},{:value => self.base, :alignment => :center}, {:value => "#{self.lifts_open}/#{resort.lifts}", :alignment => :right}]
+        Terminal::Table.new :title => "Ski Report", :headings => ['Resort Name', 'Updated On' 'Status', 'New Snow', 'Base Depth', 'Lifts Open'], :rows => rows
     end
     
     def xt_report(resort)
