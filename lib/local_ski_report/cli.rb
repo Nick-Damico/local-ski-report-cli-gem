@@ -5,7 +5,7 @@ class LocalSkiReport::CLI
     
     STATES_WITH_RESORTS = [
         { :midwest => ["Illinois", "Indiana", "Iowa", "Kansas", "Michigan", "Minnesota", "Missouri", "Ohio","Wisconsin"] },
-        { :northeast => ["Connecticut", "Maine", "Massachusets", "New Hampshire", "New Jersey", "New York", "Pennsylvania", "Rhode Island", "Vermont"] },
+        { :northeast => ["Connecticut", "Maine", "Massachusetts", "New Hampshire", "New Jersey", "New York", "Pennsylvania", "Rhode Island", "Vermont"] },
         { :northwest => ["Alaska", "Idaho", "Oregon", "Washington"] },
         { :rockies => ["Colorado", "Montana", "New Mexico", "Utah", "Wyoming"] },
         { :southeast => ["Alabama", "Georgia", "Maryland", "North Carolina", "Tennessee", "Virginia", "West Virginia"] },
@@ -33,7 +33,7 @@ class LocalSkiReport::CLI
         state_num = gets.chomp.to_i - 1
         user_region = get_region(region_num) #gets region :key
         user_state = get_state(region_num, user_region, state_num) #gets state "string"
-
+        
         resort_list = list_resorts(user_state) #user_state will be used to direct Scraper to user requested state page.
         puts "Select a Resort or Area for the latest Ski Report: "
         user_pick = gets.chomp.to_i - 1
