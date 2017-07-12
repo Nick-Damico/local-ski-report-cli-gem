@@ -39,7 +39,7 @@ class LocalSkiReport::CLI
         user_pick = gets.chomp.to_i - 1
         
         @resort = resort_list[user_pick]
-        build_table
+        display_table
         
         input = nil
         while input != "exit"
@@ -91,12 +91,9 @@ class LocalSkiReport::CLI
         puts "More info on selected resort..."
     end
     
-    def build_table
-        # Alignment of cells might need tweeaked
+    def display_table
         report = @resort.reports[0]
-        rows = []
-        rows << [resort.name, report.status,{:value => report.new_snow, :alignment => :center},{:value => report.base, :alignment => :center}, {:value => "#{report.lifts_open}/#{resort.lifts}", :alignment => :right}]
-        table = Terminal::Table.new :title => "Ski Report", :headings => ['Resort Name', 'Status', 'New Snow', 'Base Depth', 'Lifts Open'], :rows => rows
+        table = report.report(resort)        
         puts table
     end
     

@@ -19,8 +19,7 @@ class LocalSkiReport::Report
         report = self.new
         report.date = html.css('div.lUpdate').text
         report.url =  html.css('td')[3].css('a').first['href']
-        status = html.css('td')[1].css('div').first['class'].split(" ").pop
-        report.status = report.get_status(status)
+        report.status = report.get_status(html.css('td')[1].css('div').first['class'].split(" ").pop)
         report.new_snow = html.css('td')[2].css('b')[0].text
         report.base = html.css('td')[3].css('b')[0].text
         lift_open = html.css('td')[4].text.split("/").first
@@ -38,6 +37,15 @@ class LocalSkiReport::Report
         else
             "Weekends Only"
         end
+    end
+    
+    def report(resort)
+        rows = []
+        rows << [resort.name, self.status,{:value => self.new_snow, :alignment => :center},{:value => self.base, :alignment => :center}, {:value => "#{self.lifts_open}/#{resort.lifts}", :alignment => :right}]
+        Terminal::Table.new :title => "Ski Report", :headings => ['Resort Name', 'Status', 'New Snow', 'Base Depth', 'Lifts Open'], :rows => rows
+    end
+    
+    def xt_report(resort)
     end
     
 end
