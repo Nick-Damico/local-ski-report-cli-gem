@@ -87,8 +87,11 @@ class LocalSkiReport::CLI
     end
     
     def more_info
-        # Scrapper will get this info from site.
-        puts "More info on selected resort..."
+        url = @resort.url
+        report = @resort.reports.first
+        LocalSkiReport::Scraper.scrap_report_page(report, url)
+        table = report.xt_report
+        puts table
     end
     
     def display_table
