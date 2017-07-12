@@ -15,17 +15,14 @@ class LocalSkiReport::Scraper
         url = "http://www.onthesnow.com/#{state_url}/skireport.html"
         doc = self.get_page(url)
         table = get_table(doc)
-        resort_arr = self.create_resort_report(table)
+        self.create_resort_report(table)
     end
     
     def self.create_resort_report(table)
          table.collect do |resort|
-            # Build instance of Report
             new_resort = LocalSkiReport::Resort.create(resort)
             new_report = LocalSkiReport::Report.create(resort)
-            
             new_resort.add_report(new_report)
-            
             new_resort
         end
     end

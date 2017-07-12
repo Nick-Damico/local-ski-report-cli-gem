@@ -92,7 +92,6 @@ class LocalSkiReport::CLI
     end
     
     def build_table
-        # Need to fix lifts/lifts_open
         # Alignment of cells might need tweeaked
         report = @resort.reports[0]
         rows = []
