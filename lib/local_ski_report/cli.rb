@@ -90,7 +90,7 @@ class LocalSkiReport::CLI
     end
     
     def select_resort(resorts_arr)
-        puts "Select a Resort or Area for the latest Ski Report: "
+        puts "Select a Resort or Ski-Area for the latest Ski Report: "
         x = gets.chomp.to_i - 1
         @resort = resorts_arr[x]
     end
@@ -116,8 +116,10 @@ class LocalSkiReport::CLI
     end
     
     def exit_msg
-        puts "Check back later for latest Ski reports, "
-        puts "Thanks for using Local Ski Reports gem."
+        puts "-" * 60
+        puts "Check back later for the latest Ski reports."
+        puts "Thanks for using Local Ski Reports gem!"
+        puts "-" * 60
     end
     
 end
