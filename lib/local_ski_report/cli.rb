@@ -19,19 +19,24 @@ class LocalSkiReport::CLI
     end
     
     def greeting    
+        puts "=" * 40
         puts "Welcome to Local Ski Report gem"
-        puts "Find your Local Ski Report:"
+        puts "=" * 40
+        puts "Let's Get Your Local Ski Report"
+        puts " "
     end
     
     def menu
         list_regions
+        puts "-" * 40
         puts "Which region would you like to check? type number: "
         region_num = gets.chomp.to_i - 1
         
         list_states(region_num)
+        puts "-" * 40
         puts "Which State would you like to check? type number: "
         state_num = gets.chomp.to_i - 1
-        user_region = get_region(region_num) #gets region :key
+        user_region = get_key(region_num) #gets region :key
         user_state = get_state(region_num, user_region, state_num) #gets state "string"
         
         resort_list = list_resorts(user_state) #user_state will be used to direct Scraper to user requested state page.
@@ -43,20 +48,18 @@ class LocalSkiReport::CLI
         
         input = nil
         while input != "exit"
-            puts "Type: 'more' to see detailed report, 'resort' to select New Resort, 'exit' to leave App."
+            puts "Type: 'more' for detailed report, 'new' for new search, 'exit' to Quit."
             input = gets.strip.downcase
             case input
             when "resort"
                 menu
             when "more"
                 more_info
-            else 
-                puts "Not sure what you want, type 'resort' for a new search or 'exit'"
             end
         end
     end
     
-    def get_region(num)
+    def get_key(num)
         STATES_WITH_RESORTS[num].keys[0]
     end
     
