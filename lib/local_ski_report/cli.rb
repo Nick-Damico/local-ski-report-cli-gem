@@ -18,18 +18,13 @@ class LocalSkiReport::CLI
         exit_msg
     end
     
-    def greeting    
-        puts "=" * 40
-        puts "Welcome to Local Ski Report gem"
-        puts "=" * 40
-        puts "Let's Get Your Local Ski Report"
-        puts " "
-    end
-    
     def menu
         region_num = self.select_region
+        separator(50)
+        
         list_states(region_num)
         state_num = select_state
+        separator(50)
         
         user_region = get_key(region_num) 
         user_state = get_state(region_num, user_region, state_num) #gets state "string"
@@ -50,6 +45,14 @@ class LocalSkiReport::CLI
                 more_info
             end
         end
+    end
+    
+    def greeting    
+        puts "=" * 40
+        puts "Welcome to Local Ski Report gem"
+        puts "=" * 40
+        puts "Let's Get Your Local Ski Report"
+        puts " "
     end
     
     def get_key(num)
@@ -84,21 +87,26 @@ class LocalSkiReport::CLI
     
     def select_region
         list_regions
-        puts "-" * 40
+        separator(50)
         puts "Which region would you like to check? type number: "
         gets.chomp.to_i - 1
     end
     
     def select_resort(resorts_arr)
+        separator(50)
         puts "Select a Resort or Ski-Area for the latest Ski Report: "
         x = gets.chomp.to_i - 1
         @resort = resorts_arr[x]
     end
     
     def select_state
-        puts "-" * 40
+        separator(50)
         puts "Which State would you like to check? type number: "
         gets.chomp.to_i - 1
+    end
+    
+    def separator(num)
+        puts "-" * num
     end
     
     def more_info
@@ -116,10 +124,10 @@ class LocalSkiReport::CLI
     end
     
     def exit_msg
-        puts "-" * 60
+        separator(60)
         puts "Check back later for the latest Ski reports."
         puts "Thanks for using Local Ski Reports gem!"
-        puts "-" * 60
+        separator(60)
     end
-    
+
 end
