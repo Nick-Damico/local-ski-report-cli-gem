@@ -27,23 +27,16 @@ class LocalSkiReport::CLI
     end
     
     def menu
-        list_regions
-        puts "-" * 40
-        puts "Which region would you like to check? type number: "
-        region_num = gets.chomp.to_i - 1
-        
+        region_num = self.select_region
         list_states(region_num)
-        puts "-" * 40
-        puts "Which State would you like to check? type number: "
-        state_num = gets.chomp.to_i - 1
-        user_region = get_key(region_num) #gets region :key
+        state_num = select_state
+        
+        user_region = get_key(region_num) 
         user_state = get_state(region_num, user_region, state_num) #gets state "string"
         
-        resort_list = list_resorts(user_state) #user_state will be used to direct Scraper to user requested state page.
-        puts "Select a Resort or Area for the latest Ski Report: "
-        user_pick = gets.chomp.to_i - 1
+        resort_list = list_resorts(user_state) 
+        select_resort(resort_list)
         
-        @resort = resort_list[user_pick]
         display_table
         
         input = nil
@@ -89,6 +82,25 @@ class LocalSkiReport::CLI
         end
     end
     
+    def select_region
+        list_regions
+        puts "-" * 40
+        puts "Which region would you like to check? type number: "
+        gets.chomp.to_i - 1
+    end
+    
+    def select_resort(resorts_arr)
+        puts "Select a Resort or Area for the latest Ski Report: "
+        x = gets.chomp.to_i - 1
+        @resort = resorts_arr[x]
+    end
+    
+    def select_state
+        puts "-" * 40
+        puts "Which State would you like to check? type number: "
+        gets.chomp.to_i - 1
+    end
+    
     def more_info
         url = @resort.url
         report = @resort.reports.first
@@ -98,7 +110,7 @@ class LocalSkiReport::CLI
     end
     
     def display_table
-        report = @resort.reports[0]
+        report = @resort.reports.first
         table = report.report(resort)        
         puts table
     end
