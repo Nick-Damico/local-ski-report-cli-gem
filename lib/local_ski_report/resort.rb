@@ -3,8 +3,12 @@ class   LocalSkiReport::Resort
     
     @@all = []
     
-    def initialize
+    def initialize(name, url, location, lifts)
         @reports = []
+        @name = name
+        @url = url
+        @location = location
+        @lifts = lifts
         @@all << self
     end
     
@@ -17,12 +21,11 @@ class   LocalSkiReport::Resort
     end
     
     def self.create(html)
-        new_resort = self.new
-        new_resort.name = html.css('td div.name').text
-        new_resort.url = html.css('div.name a').first['href']
-        new_resort.location = html.css('td div.rRegion').text
-        new_resort.lifts =  html.css('td')[4].text.split("/").last
-        new_resort
+        name = html.css('td div.name').text
+        url = html.css('div.name a').first['href']
+        location = html.css('td div.rRegion').text
+        lifts =  html.css('td')[4].text.split("/").last
+        self.new(name, url, location, lifts)
     end
     
     def add_report(report)
