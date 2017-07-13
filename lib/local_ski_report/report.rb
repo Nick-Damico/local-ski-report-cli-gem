@@ -28,6 +28,11 @@ class LocalSkiReport::Report
         report
     end
     
+    def get_ticket_prices(row)
+        arr = row.css('td').text.gsub("US","").split
+        [arr[1], arr[3]]
+    end
+    
     def get_status(state)
         case state
         when "stateD1"
@@ -45,15 +50,8 @@ class LocalSkiReport::Report
         self.elevation = rows[1].css('td').text.split(" - ")
         self.trails = rows[2].css('td').text.gsub("|","").split
         self.tickets = get_ticket_prices(rows[4])
-        
     end
-    
-    def get_ticket_prices(row)
-        arr = row.css('td').text.gsub("US","").split
-        price_arr = [arr[1], arr[3]]
-        price_arr
-    end
-    
+
     def report(resort)
         rows = []
         rows << [resort.name, {:value => self.date, :alignment => :center}, self.status, {:value => self.new_snow, :alignment => :center},{:value => self.base, :alignment => :center}, {:value => "#{self.lifts_open}/#{resort.lifts}", :alignment => :right}]
@@ -63,10 +61,10 @@ class LocalSkiReport::Report
 
     def xt_report
         rows = []
-        rows << ['ELEVATION', "Base: #{elevation[0]}", "-" , "Summit: #{elevation[1]}"]
+        rows << ['ELEVATION', "Base:", "#{elevation[0]}", "Summit:", "#{elevation[1]}"]
         rows << ["TRAILS", "Beginner: #{trails[0]}", "Intermediate: #{trails[1]}", "Advanced: #{trails[2]}", "Expert: #{trails[3]}"]
-        rows << ["TICKET PRICES", "From: #{tickets[0]}", "to #{tickets[1]}"]
-        table = Terminal::Table.new :title => "EXTEND SKI REPORT INFO.", :rows => rows
+        rows << ["TICKET PRICES", "Starting at:", "#{tickets[0]}", {:value => "to", :alignment => :center}, "#{tickets[1]}"]
+        table = Terminal::Table.new :title => "#{self.resort.name} Full Report", :rows => rows
         table.style = {:all_separators => true}
         table
     end
