@@ -48,9 +48,9 @@ class LocalSkiReport::CLI
     end
     
     def greeting    
-        puts "=" * 40
+        separator(40)
         puts "Welcome to Local Ski Report gem"
-        puts "=" * 40
+        separator(40)
         puts "Let's Get Your Local Ski Report"
         puts " "
     end
