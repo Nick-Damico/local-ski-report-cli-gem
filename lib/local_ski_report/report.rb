@@ -27,18 +27,16 @@ class LocalSkiReport::Report
         status = self.get_status(html.css('td')[1].css('div').first['class'].split(" ").pop)
         new_snow = html.css('td')[2].css('b')[0].text
         base = html.css('td')[3].css('b')[0].text
-        if html.css('td')[4].text.split("/").first == ""
-            lifts_open = 0
-        else 
-            lifts_open = html.css('td')[4].text.split("/").first
-        end
-       
+        lifts_open = self.get_lift_status(html)
         self.new(date, url, status, new_snow, base, lifts_open)
     end
     
-    def get_ticket_prices(row)
-        arr = row.css('td').text.gsub("US","").split
-        [arr[1], arr[3]]
+    def self.get_lift_status(html)
+        if html.css('td')[4].text.split("/").first == ""
+            0
+        else 
+            html.css('td')[4].text.split("/").first
+        end
     end
     
     def self.get_status(state)
@@ -52,6 +50,17 @@ class LocalSkiReport::Report
         end
     end
     
+    def get_ticket_prices(row)
+        arr = row.css('td').text.gsub("US","").split
+        [arr[1], arr[3]]
+    end
+    
+    def report
+        rows = []
+        rows << [self.resort.name, {:value => self.date, :alignment => :center}, self.status, {:value => self.new_snow, :alignment => :center},{:value => self.base, :alignment => :center}, {:value => "#{self.lifts_open}/#{resort.lifts}", :alignment => :right}]
+        Terminal::Table.new :title => "Ski Report", :headings => ['Resort Name', 'Updated On', 'Status', 'New Snow', 'Base Depth', 'Lifts Open'], :rows => rows
+    end
+    
     def get_xt_report_info(html)
         table = html.css('table')
         rows = table.css('tr')
@@ -59,13 +68,6 @@ class LocalSkiReport::Report
         self.trails = rows[2].css('td').text.gsub("|","").split
         self.tickets = get_ticket_prices(rows[4])
     end
-
-    def report
-        rows = []
-        rows << [self.resort.name, {:value => self.date, :alignment => :center}, self.status, {:value => self.new_snow, :alignment => :center},{:value => self.base, :alignment => :center}, {:value => "#{self.lifts_open}/#{resort.lifts}", :alignment => :right}]
-        Terminal::Table.new :title => "Ski Report", :headings => ['Resort Name', 'Updated On', 'Status', 'New Snow', 'Base Depth', 'Lifts Open'], :rows => rows
-    end
-    
 
     def xt_report
         rows = []
