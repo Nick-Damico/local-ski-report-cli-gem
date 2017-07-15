@@ -118,8 +118,7 @@ class LocalSkiReport::CLI
     end
     
     def display_table
-        report = @resort.reports.first
-        table = report.report(resort)        
+        table = @resort.reports[0].report
         puts table
     end
     
