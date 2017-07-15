@@ -32,7 +32,7 @@ class LocalSkiReport::CLI
         resort_list = list_resorts(user_state) 
         select_resort(resort_list)
         
-        display_table
+        display_report
         
         input = nil
         while input != "exit"
@@ -42,7 +42,7 @@ class LocalSkiReport::CLI
             when "resort"
                 menu
             when "more"
-                more_info
+                display_xt_report
             end
         end
     end
@@ -109,7 +109,7 @@ class LocalSkiReport::CLI
         puts "-" * num
     end
     
-    def more_info
+    def display_xt_report
         url = @resort.url
         report = @resort.reports.first
         LocalSkiReport::Scraper.scrap_report_page(report, url)
@@ -117,7 +117,7 @@ class LocalSkiReport::CLI
         puts table
     end
     
-    def display_table
+    def display_report
         table = @resort.reports[0].report
         puts table
     end
