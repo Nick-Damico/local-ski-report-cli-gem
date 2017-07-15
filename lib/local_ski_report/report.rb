@@ -3,7 +3,13 @@ class LocalSkiReport::Report
     
     @@all = []
     
-    def initialize
+    def initialize(date, url, status, new_snow, base, lifts_open)
+        @date = date
+        @url = url
+        @status = status
+        @new_snow = new_snow
+        @base = base
+        @lifts_open = lifts_open
         @@all << self
     end
     
@@ -16,16 +22,18 @@ class LocalSkiReport::Report
     end
     
     def self.create(html)
-        report = self.new
-        report.date = html.css('div.lUpdate').text
-        report.url =  html.css('td')[3].css('a').first['href']
-        report.status = report.get_status(html.css('td')[1].css('div').first['class'].split(" ").pop)
-        report.new_snow = html.css('td')[2].css('b')[0].text
-        report.base = html.css('td')[3].css('b')[0].text
-        lift_open = html.css('td')[4].text.split("/").first
-        lift_open == "" ? report.lifts_open = 0 : report.lifts_open = lift_open
+        date = html.css('div.lUpdate').text
+        url =  html.css('td')[3].css('a').first['href']
+        status = self.get_status(html.css('td')[1].css('div').first['class'].split(" ").pop)
+        new_snow = html.css('td')[2].css('b')[0].text
+        base = html.css('td')[3].css('b')[0].text
+        if html.css('td')[4].text.split("/").first == ""
+            lifts_open = 0
+        else 
+            lifts_open = html.css('td')[4].text.split("/").first
+        end
        
-        report
+        self.new(date, url, status, new_snow, base, lifts_open)
     end
     
     def get_ticket_prices(row)
@@ -33,7 +41,7 @@ class LocalSkiReport::Report
         [arr[1], arr[3]]
     end
     
-    def get_status(state)
+    def self.get_status(state)
         case state
         when "stateD1"
             "Open"
