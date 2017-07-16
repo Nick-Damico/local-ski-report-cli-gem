@@ -117,7 +117,7 @@ class LocalSkiReport::CLI
     end
     
     def display_report
-        puts "#{@resort.reports.firt.report}"
+        puts "#{@resort.reports.first.report}"
     end
     
     def exit_msg
