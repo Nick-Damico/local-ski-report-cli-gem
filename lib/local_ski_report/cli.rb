@@ -110,9 +110,8 @@ class LocalSkiReport::CLI
     end
     
     def display_xt_report
-        url = @resort.url
         report = @resort.reports.first
-        LocalSkiReport::Scraper.scrap_report_page(report, url)
+        LocalSkiReport::Scraper.scrap_report_page(report)
         table = report.xt_report
         puts table
     end
