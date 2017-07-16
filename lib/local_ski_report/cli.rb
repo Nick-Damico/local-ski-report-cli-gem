@@ -117,8 +117,7 @@ class LocalSkiReport::CLI
     end
     
     def display_report
-        table = @resort.reports[0].report
-        puts table
+        puts "#{@resort.reports.firt.report}"
     end
     
     def exit_msg
