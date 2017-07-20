@@ -28,9 +28,7 @@ class LocalSkiReport::CLI
         user_region = get_key(region_num) 
         user_state = get_state(region_num, user_region, state_num) #gets state "string"
         
-        resort_list = list_resorts(user_state) 
-        select_resort(resort_list)
-        
+        select_resort(user_state)
         display_report
         
         input = nil
@@ -91,7 +89,8 @@ class LocalSkiReport::CLI
         gets.chomp.to_i - 1
     end
     
-    def select_resort(resorts_arr)
+    def select_resort(state)
+        resorts_arr = list_resorts(state)
         separator(50)
         puts "Select a Resort or Ski-Area for the latest Ski Report: "
         x = gets.chomp.to_i - 1
