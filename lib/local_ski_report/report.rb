@@ -64,9 +64,9 @@ class LocalSkiReport::Report
     def get_xt_report_info(html)
         table = html.css('table')
         rows = table.css('tr')
-        self.elevation = rows[1].css('td').text.split(" - ")
-        self.trails = rows[2].css('td').text.gsub("|","").split
-        self.tickets = get_ticket_prices(rows[4])
+        @elevation = rows[1].css('td').text.split(" - ")
+        @trails = rows[2].css('td').text.gsub("|","").split
+        @tickets = get_ticket_prices(rows[4])
     end
 
     def xt_report
