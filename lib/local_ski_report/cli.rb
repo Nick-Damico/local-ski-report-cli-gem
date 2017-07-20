@@ -22,8 +22,7 @@ class LocalSkiReport::CLI
         region_num = self.select_region
         separator(50)
         
-        list_states(region_num)
-        state_num = select_state
+        state_num = select_state(region_num)
         separator(50)
         
         user_region = get_key(region_num) 
@@ -99,7 +98,8 @@ class LocalSkiReport::CLI
         @resort = resorts_arr[x]
     end
     
-    def select_state
+    def select_state(region)
+        list_states(region)
         separator(50)
         puts "Which State would you like to check? type number: "
         gets.chomp.to_i - 1
@@ -112,8 +112,7 @@ class LocalSkiReport::CLI
     def display_xt_report
         report = @resort.reports.first
         LocalSkiReport::Scraper.scrap_report_page(report)
-        table = report.xt_report
-        puts table
+        puts report.xt_report
     end
     
     def display_report
