@@ -39,7 +39,7 @@ class LocalSkiReport::CLI
             puts "Type: 'more' for detailed report, 'new' for new search, 'exit' to Quit."
             input = gets.strip.downcase
             case input
-            when "resort"
+            when "new"
                 menu
             when "more"
                 display_xt_report
