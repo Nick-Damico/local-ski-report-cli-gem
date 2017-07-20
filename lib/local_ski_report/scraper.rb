@@ -19,9 +19,9 @@ class LocalSkiReport::Scraper
     end
     
     def self.create_resort_report(table)
-         table.collect do |resort|
-            new_resort = LocalSkiReport::Resort.create(resort)
-            new_report = LocalSkiReport::Report.create(resort)
+         table.collect do |row|
+            new_resort = LocalSkiReport::Resort.create(row)
+            new_report = LocalSkiReport::Report.create(row)
             new_resort.add_report(new_report)
             new_resort
         end
