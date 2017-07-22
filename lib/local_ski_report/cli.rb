@@ -22,11 +22,11 @@ class LocalSkiReport::CLI
         region_num = self.select_region
         separator(50)
         
-        state_num = select_state(region_num)
+        state_num = self.select_state(region_num)
         separator(50)
         
-        user_region = get_key(region_num) 
-        user_state = get_state(region_num, user_region, state_num) #gets state "string"
+        user_region = self.get_key(region_num) 
+        user_state = self.get_state(region_num, user_region, state_num) #gets state "string"
         
         select_resort(user_state)
         display_report
@@ -76,9 +76,9 @@ class LocalSkiReport::CLI
         end
     end
     
-    def list_states(user_request)
-        STATES_WITH_RESORTS[user_request].each_value do |states|
-            states.each_with_index { |state, i| puts "#{i+1}. #{state}" }
+    def list_states(num)
+        STATES_WITH_RESORTS[num].each_value do |states|
+            states.each.with_index(1) { |state, i| puts "#{i}. #{state}" }
         end
     end
     
@@ -86,22 +86,40 @@ class LocalSkiReport::CLI
         list_regions
         separator(50)
         puts "Which region would you like to check? type number: "
-        gets.chomp.to_i - 1
+        input =  gets.chomp.to_i - 1
+        if input.between?(0, STATES_WITH_RESORTS.SIZE - 1)
+            input
+        else
+            puts "Invalid number. Please choose a number between 1 - #{STATES_WITH_RESORTS.size}: "
+            select_region
+        end
     end
     
     def select_resort(state)
         resorts_arr = list_resorts(state)
         separator(50)
         puts "Select a Resort or Ski-Area for the latest Ski Report: "
-        x = gets.chomp.to_i - 1
-        @resort = resorts_arr[x]
+        input = gets.chomp.to_i - 1
+        if input.between?(0, resorts_arr.size - 1)
+            @resort = resorts_arr[x]
+        else
+            puts "Invalid Choice. Please choose a Resort # between 1 - #{resorts_arr.size}."
+            select_resort(state)
+        end
     end
     
-    def select_state(region)
-        list_states(region)
+    def select_state(region_num)
+        list_states(region_num)
         separator(50)
         puts "Which State would you like to check? type number: "
-        gets.chomp.to_i - 1
+        input = gets.chomp.to_i - 1
+        if input.between?(0, STATES_WITH_RESORTS[region_num].size - 1)
+            input
+        else
+            puts "Invalid Choice. Please choose a Resort # between 1 - #{STATES_WITH_RESORTS[region_num].size}."
+            select_state(region_num)
+        end
+        
     end
     
     def separator(num)
@@ -109,13 +127,13 @@ class LocalSkiReport::CLI
     end
     
     def display_xt_report
-        report = @resort.reports.first
+        report = resort.reports.first
         LocalSkiReport::Scraper.scrap_report_page(report)
         puts report.xt_report
     end
     
     def display_report
-        puts "#{@resort.reports.first.report}"
+        puts @resort.reports.first.report
     end
     
     def exit_msg
