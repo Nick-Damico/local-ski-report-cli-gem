@@ -96,7 +96,9 @@ class LocalSkiReport::CLI
         if input.between?(0, STATES_WITH_RESORTS.size - 1)
             input
         else
+            separator(55)
             puts "Invalid number. Please choose a number between 1 - #{STATES_WITH_RESORTS.size}: "
+            separator(55)
             select_region
         end
     end
