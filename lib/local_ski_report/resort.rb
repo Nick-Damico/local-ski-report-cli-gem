@@ -33,4 +33,11 @@ class   LocalSkiReport::Resort
         self.reports << report
     end
     
+    # class method sort_by_num_lifts_desc
+    #returns the Resort objects in order of the number of lifts they have
+    def self.sort_by_lifts_desc
+        all.sort do |resort|
+            resort.lifts
+        end
+    end
 end

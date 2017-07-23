@@ -19,14 +19,13 @@ class LocalSkiReport::CLI
     end
     
     def menu
-        region_num = self.select_region
+        region_num = select_region
+        user_region = get_key(region_num) 
         separator(50)
         
-        state_num = self.select_state(region_num)
+        state_num = select_state(region_num, user_region)
+        user_state = get_state(region_num, user_region, state_num) #gets state "string"
         separator(50)
-        
-        user_region = self.get_key(region_num) 
-        user_state = self.get_state(region_num, user_region, state_num) #gets state "string"
         
         select_resort(user_state)
         display_report
@@ -40,6 +39,8 @@ class LocalSkiReport::CLI
                 menu
             when "more"
                 display_xt_report
+            else
+                puts "Invalid command entered."
             end
         end
     end
@@ -87,7 +88,7 @@ class LocalSkiReport::CLI
         separator(50)
         puts "Which region would you like to check? type number: "
         input =  gets.chomp.to_i - 1
-        if input.between?(0, STATES_WITH_RESORTS.SIZE - 1)
+        if input.between?(0, STATES_WITH_RESORTS.size - 1)
             input
         else
             puts "Invalid number. Please choose a number between 1 - #{STATES_WITH_RESORTS.size}: "
@@ -103,23 +104,26 @@ class LocalSkiReport::CLI
         if input.between?(0, resorts_arr.size - 1)
             @resort = resorts_arr[x]
         else
+            separator(60)
             puts "Invalid Choice. Please choose a Resort # between 1 - #{resorts_arr.size}."
+            separator(60)
             select_resort(state)
         end
     end
     
-    def select_state(region_num)
+    def select_state(region_num, region_key)
         list_states(region_num)
         separator(50)
         puts "Which State would you like to check? type number: "
         input = gets.chomp.to_i - 1
-        if input.between?(0, STATES_WITH_RESORTS[region_num].size - 1)
+        if input.between?(0, STATES_WITH_RESORTS[region_num][region_key].size - 1)
             input
         else
-            puts "Invalid Choice. Please choose a Resort # between 1 - #{STATES_WITH_RESORTS[region_num].size}."
-            select_state(region_num)
+            separator(55)
+            puts "Invalid Choice. Please choose a Resort # between 1 - #{STATES_WITH_RESORTS[region_num][region_key].size}."
+            separator(55)
+            select_state(region_num, region_key)
         end
-        
     end
     
     def separator(num)
