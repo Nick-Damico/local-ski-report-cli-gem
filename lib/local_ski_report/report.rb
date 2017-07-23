@@ -35,10 +35,6 @@ class LocalSkiReport::Report
         self.new(date, url, status, new_snow, base, lifts_open)
     end
     
-    def find_by_location(location)
-        self.all.detect { |resort| resort.location = location }
-    end
-    
     def self.get_lift_status(html)
         if html.css('td')[4].text.split("/").first == ""
             0
