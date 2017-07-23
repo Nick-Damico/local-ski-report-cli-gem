@@ -25,10 +25,18 @@ class LocalSkiReport::Report
         date = html.css('div.lUpdate').text
         url =  html.css('td')[3].css('a').first['href']
         status = self.get_status(html.css('td')[1].css('div').first['class'].split(" ").pop)
-        new_snow = html.css('td')[2].css('b')[0].text
+        if html.css('td')[2].css('b')[0]
+            new_snow = html.css('td')[2].css('b')[0].text
+        else
+            new_snow = 'N/A'
+        end
         base = html.css('td')[3].css('b')[0].text
         lifts_open = self.get_lift_status(html)
         self.new(date, url, status, new_snow, base, lifts_open)
+    end
+    
+    def find_by_location(location)
+        self.all.detect { |resort| resort.location = location }
     end
     
     def self.get_lift_status(html)
