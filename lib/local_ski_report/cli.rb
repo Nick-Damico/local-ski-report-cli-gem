@@ -62,12 +62,13 @@ class LocalSkiReport::CLI
     end
     
     def get_state(reg_num, user_reg, st_num)
-        STATES_WITH_RESORTS[reg_num][user_reg][st_num].downcase.gsub(" ", "-") #Get users choosen State Regions Array
+        STATES_WITH_RESORTS[reg_num][user_reg][st_num] + ", USA"
     end
     
     def list_resorts(state)
-        resorts = LocalSkiReport::Scraper.scrap_resorts_page(state)
-        resorts.each_with_index { |r,i| puts "#{i+1}. #{r.name}" }
+        resorts = LocalSkiReport::Resort.find_by_location(state)
+        # resorts = LocalSkiReport::Scraper.scrap_resorts_page(state)
+        resorts.each.with_index(1) { |r, i| puts "#{i}. #{r.name}" }
         resorts
     end
     
