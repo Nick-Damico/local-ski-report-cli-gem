@@ -12,12 +12,16 @@ class LocalSkiReport::CLI
         { :west_coast => ["Arizona", "California", "Nevada"] }
     ]
     
+    def initialize
+        LocalSkiReport::Scraper.scrap_resorts_page("united-states")
+    end
+    
     def call
         greeting
         menu
         exit_msg
     end
-    
+  
     def menu
         region_num = select_region
         user_region = get_key(region_num) 
@@ -102,7 +106,7 @@ class LocalSkiReport::CLI
         puts "Select a Resort or Ski-Area for the latest Ski Report: "
         input = gets.chomp.to_i - 1
         if input.between?(0, resorts_arr.size - 1)
-            @resort = resorts_arr[x]
+            @resort = resorts_arr[input]
         else
             separator(60)
             puts "Invalid Choice. Please choose a Resort # between 1 - #{resorts_arr.size}."
