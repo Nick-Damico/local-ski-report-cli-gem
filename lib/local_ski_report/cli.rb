@@ -35,14 +35,18 @@ class LocalSkiReport::CLI
         display_report
         
         input = nil
-        while input != "exit"
+        unless input == "exit"
             puts "Type: 'more' for detailed report, 'new' for new search, 'exit' to Quit."
-            input = gets.strip.downcase
+            input = gets.chomp.downcase
+            
             case input
             when "new"
                 menu
             when "more"
                 display_xt_report
+            when "exit"
+                puts
+                puts
             else
                 puts "Invalid command entered."
             end
@@ -51,9 +55,9 @@ class LocalSkiReport::CLI
     
     def greeting    
         separator(40)
-        puts "Welcome to Local Ski Report gem"
-        separator(40)
         puts "Let's Get Your Local Ski Report"
+        separator(40)
+        puts "Welcome to Local Ski Report gem"
         puts " "
     end
     
