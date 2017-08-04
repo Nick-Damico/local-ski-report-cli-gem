@@ -28,7 +28,7 @@ class LocalSkiReport::CLI
         separator(50)
         
         state_num = select_state(region_num, user_region)
-        user_state = get_state(region_num, user_region, state_num) #gets state "string"
+        user_state = get_state(region_num, user_region, state_num) 
         separator(50)
         
         select_resort(user_state)

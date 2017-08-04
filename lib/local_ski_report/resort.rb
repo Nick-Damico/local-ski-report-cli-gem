@@ -37,8 +37,6 @@ class   LocalSkiReport::Resort
         self.all.find_all { |resort| resort.location == location }
     end
     
-    # class method sort_by_num_lifts_desc
-    #returns the Resort objects in order of the number of lifts they have
     def self.sort_by_lifts_desc
         self.all.sort { |x, y| y.lifts.to_i <=> x.lifts.to_i }
     end
