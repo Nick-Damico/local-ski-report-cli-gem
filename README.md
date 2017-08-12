@@ -21,6 +21,10 @@ Or install it yourself as:
 
 ## Usage
 
+Run gem with command:
+
+    $ local_ski_report
+
 TODO: 
 * Expand this gem to include Regions outside of the USA
 * Add Additional columns to report to expand upon information.
