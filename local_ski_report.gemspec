@@ -5,7 +5,7 @@ require 'local_ski_report/version'
 
 Gem::Specification.new do |spec|
   spec.name          = "local_ski_report"
-  spec.version       = '0.1.0'
+  spec.version       = '0.1.1'
   spec.date          = '2017-08-12'
   spec.authors       = ["Nick Alan DAmico"]
   spec.email         = ["nickalan82@icloud.com"]

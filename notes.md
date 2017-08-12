@@ -21,7 +21,7 @@
 - Setup Env file in ```config/environment.rb```
  
 ```
-User types ‘local-ski-report’
+User types ‘local_ski_report’
 ```
 
 “Select a state to see list of Resorts: “
