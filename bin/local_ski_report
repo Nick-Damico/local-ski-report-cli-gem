@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
 require "bundler/setup"
-require_relative "../config/environment"
+require_relative "../lib/local_ski_report"
 
 LocalSkiReport::CLI.new.call
