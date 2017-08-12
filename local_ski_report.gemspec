@@ -5,13 +5,13 @@ require 'local_ski_report/version'
 
 Gem::Specification.new do |spec|
   spec.name          = "local_ski_report"
-  spec.version       = '0.1.2'
+  spec.version       = LocalSkiReport::VERSION
   spec.date          = '2017-08-12'
   spec.authors       = ["Nick Alan DAmico"]
   spec.email         = ["nickalan82@icloud.com"]
 
   spec.summary       = "Ski Reports from local Ski Areas"
-  spec.description   = "Gives latest ski reports from a local ski area or resort"
+  spec.description   = "Find the latest ski report from your local ski area or resort."
   spec.homepage      = "https://github.com/Nick-Damico/local-ski-report-cli-gem"
   spec.license       = "MIT"
 
