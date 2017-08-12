@@ -35,18 +35,20 @@ class LocalSkiReport::CLI
         display_report
         
         input = nil
-        unless input == "exit"
+        while input != "exit"
             puts "Type: 'more' for detailed report, 'new' for new search, 'exit' to Quit."
             input = gets.chomp.downcase
             
             case input
             when "new"
                 menu
+                break
             when "more"
                 display_xt_report
             when "exit"
                 puts
                 puts
+                break
             else
                 puts "Invalid command entered."
             end
@@ -55,9 +57,9 @@ class LocalSkiReport::CLI
     
     def greeting    
         separator(40)
-        puts "Let's Get Your Local Ski Report"
-        separator(40)
         puts "Welcome to Local Ski Report gem"
+        separator(40)
+       puts "Let's Get Your Local Ski Report"
         puts " "
     end
     
@@ -95,13 +97,13 @@ class LocalSkiReport::CLI
     def select_region
         list_regions
         separator(50)
-        puts "Which region would you like to check? type number: "
+        puts "Select a region to check? type number: "
         input =  gets.chomp.to_i - 1
         if input.between?(0, STATES_WITH_RESORTS.size - 1)
             input
         else
             separator(55)
-            puts "Invalid number. Please choose a number between 1 - #{STATES_WITH_RESORTS.size}: "
+            puts "Invalid number. Please select a number between 1 - #{STATES_WITH_RESORTS.size}: "
             separator(55)
             select_region
         end
@@ -110,7 +112,7 @@ class LocalSkiReport::CLI
     def select_resort(state)
         resorts_arr = list_resorts(state)
         separator(50)
-        puts "Select a Resort or Ski-Area for the latest Ski Report: "
+        puts "Select a Resort or Ski-Area for the latest Report: "
         input = gets.chomp.to_i - 1
         if input.between?(0, resorts_arr.size - 1)
             @resort = resorts_arr[input]
@@ -125,7 +127,7 @@ class LocalSkiReport::CLI
     def select_state(region_num, region_key)
         list_states(region_num)
         separator(50)
-        puts "Which State would you like to check? type number: "
+        puts "Select a State to check? type number: "
         input = gets.chomp.to_i - 1
         if input.between?(0, STATES_WITH_RESORTS[region_num][region_key].size - 1)
             input
@@ -154,7 +156,7 @@ class LocalSkiReport::CLI
     def exit_msg
         separator(60)
         puts "Check back later for the latest Ski reports."
-        puts "Thanks for using Local Ski Reports gem!"
+        puts "Thanks for using Local Ski Report gem!"
         separator(60)
     end
 
