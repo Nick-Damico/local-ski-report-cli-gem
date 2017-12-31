@@ -22,6 +22,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rake", "~> 10.0"
   spec.add_development_dependency "rspec", "~> 3.0"
   spec.add_development_dependency "pry", "~> 0"
-  spec.add_dependency             "nokogiri", ">=0"
-  spec.add_dependency             "terminal-table", "~> 1.8.0"
+  spec.add_runtime_dependency "nokogiri",
+    [">= 1.8.1"]
+  spec.add_runtime_dependency "terminal-table", [">= 1.8.0"]
 end
