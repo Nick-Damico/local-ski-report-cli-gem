@@ -2,7 +2,7 @@ PATH
   remote: .
   specs:
     local_ski_report (0.1.0)
-      nokogiri (~> 1.8.1)
+      nokogiri
       terminal-table (~> 1.8.0)
 
 GEM
