@@ -12,7 +12,7 @@ class LocalSkiReport::Scraper
     end
     
     def self.scrap_resorts_page(state_url)
-        url = "http://www.onthesnow.com/#{state_url}/skireport.html"
+        url = "https://www.onthesnow.com/#{state_url}/skireport.html"
         doc = self.get_page(url)
         table = get_table(doc)
         self.create_resort_report(table)
