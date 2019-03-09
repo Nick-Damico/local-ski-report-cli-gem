@@ -1,4 +1,5 @@
 require "bundler/setup"
+Bundler.setup
 require "local_ski_report"
 
 RSpec.configure do |config|
