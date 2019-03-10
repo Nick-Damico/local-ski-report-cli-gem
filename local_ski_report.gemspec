@@ -17,6 +17,7 @@ Gem::Specification.new do |spec|
   spec.executables   = ['local_ski_report']
   spec.files         = ['lib/local_ski_report.rb', 'lib/local_ski_report/cli.rb', 'lib/local_ski_report/report.rb', 'lib/local_ski_report/resort.rb', 'lib/local_ski_report/scraper.rb', 'config/environment.rb']
 
+  spec.add_dependency 'require_all', '~> 2.0'
   spec.add_development_dependency 'bundler', '~> 1.14'
   spec.add_development_dependency 'pry', '~> 0'
   spec.add_development_dependency 'rake', '~> 10.0'
