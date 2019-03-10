@@ -9,16 +9,16 @@ class LocalSkiReport::Regions
   ].freeze
 
   def self.all_regions
-    REGIONS_WITH_RESORTS.map.with_index(1) do |region, i|
+    REGIONS_WITH_RESORTS.map do |region|
       region.each_key.map do |k|
-        "#{i}. #{k.to_s.tr('_', ' ').upcase}"
+        k.to_s.tr('_', '').upcase
       end
     end.flatten
   end
 
   def self.all_states_in_region(num)
     REGIONS_WITH_RESORTS[num].each_value.map do |states|
-      states.map.with_index(1) { |state, i| "#{i}. #{state}" }
+      states.map { |state| state }      
     end.flatten
   end
 end
