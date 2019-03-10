@@ -1,8 +1,8 @@
 class LocalSkiReport::Report
     attr_accessor :date, :url, :status, :new_snow, :base, :lifts_open, :resort, :elevation, :trails, :tickets
-    
+
     @@all = []
-    
+
     def initialize(date, url, status, new_snow, base, lifts_open)
         @date = date
         @url = url
@@ -12,15 +12,15 @@ class LocalSkiReport::Report
         @lifts_open = lifts_open
         @@all << self
     end
-    
+
     def self.all
         @@all
     end
-    
+
     def self.clear
         @@all.clear
     end
-    
+
     def self.create(html)
         date = html.css('div.lUpdate').text
         url =  html.css('td')[3].css('a').first['href']
@@ -34,15 +34,15 @@ class LocalSkiReport::Report
         lifts_open = self.get_lift_status(html)
         self.new(date, url, status, new_snow, base, lifts_open)
     end
-    
+
     def self.get_lift_status(html)
         if html.css('td')[4].text.split("/").first == ""
             0
-        else 
+        else
             html.css('td')[4].text.split("/").first
         end
     end
-    
+
     def self.get_status(state)
         case state
         when "stateD1"
@@ -53,18 +53,18 @@ class LocalSkiReport::Report
             "Weekends Only"
         end
     end
-    
+
     def get_ticket_prices(row)
         arr = row.css('td').text.gsub("US","").split
         [arr[1], arr[3]]
     end
-    
+
     def report
         rows = []
         rows << [self.resort.name, {:value => self.date, :alignment => :center}, self.status, {:value => self.new_snow, :alignment => :center},{:value => self.base, :alignment => :center}, {:value => "#{self.lifts_open}/#{resort.lifts}", :alignment => :right}]
         Terminal::Table.new :title => "Ski Report", :headings => ['Resort Name', 'Updated On', 'Status', 'New Snow', 'Base Depth', 'Lifts Open'], :rows => rows
     end
-    
+
     def get_xt_report_info(html)
         table = html.css('table')
         rows = table.css('tr')
@@ -81,6 +81,5 @@ class LocalSkiReport::Report
         table = Terminal::Table.new :title => "#{self.resort.name} Full Report", :rows => rows
         table.style = {:all_separators => true}
         table
-    end
-    
+    end  
 end
