@@ -12,7 +12,8 @@ RSpec.describe LocalSkiReport::Output do
 
   describe '.list_states' do
     it 'outputs to terminal a numbered list of states from a region' do
-      
+      expect { @output.list_states(0) }.to output("1. Illinois\n2. Indiana\n3. Iowa\n4. Kansas\n5. Michigan\n6. Minnesota\n7. Missouri\n8. Ohio\n9. Wisconsin\n").to_stdout
     end
   end
+
 end
