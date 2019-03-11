@@ -1,5 +1,10 @@
 class LocalSkiReport::Output
   include Formattable
+  attr_reader :input
+
+  def initialize
+    @input = LocalSkiReport::Input.new
+  end
 
   def greeting
     separator(40)
@@ -18,36 +23,30 @@ class LocalSkiReport::Output
 
   def list_regions
     regions = LocalSkiReport::Regions.all_regions
-    numbered_collection(regions).each { |region| puts region }    
+    numbered_collection(regions).each { |region| puts region }
   end
 
   def list_states(num)
-    LocalSkiReport::CLI::STATES_WITH_RESORTS[num].each_value do |states|
-      states.each.with_index(1) { |state, i| puts "#{i}. #{state}" }
-    end
+    states = LocalSkiReport::Regions.all_states_in_region(num)
+    numbered_collection(states).each { |state| puts state }
   end
 
   def select_region
     list_regions
     separator(50)
-    puts 'Select a region to check? type number: '
-    input = gets.chomp.to_i - 1
-    if input.between?(0, STATES_WITH_RESORTS.size - 1)
-      input
-    else
-      separator(55)
-      puts "Invalid number. Please select a number between 1 - #{STATES_WITH_RESORTS.size}: "
-      separator(55)
-      select_region
-    end
+    @input.user_selection('Select a region to check? type number: ', LocalSkiReport::Regions.all_regions)
+  end
+
+  def select_state(region_num)
+    list_states(region_num)
+    separator(50)
+    @input.user_selection('Select a State to check? type number: ', LocalSkiReport::Regions.all_states_in_region(region_num))
   end
 
   def display_menu
     region_num = select_region
-    user_region = get_key(region_num)
-    separator(50)
-
-    state_num = select_state(region_num, user_region)
+    state_num = select_state(region_num)
+    
     user_state = get_state(region_num, user_region, state_num)
     separator(50)
 
