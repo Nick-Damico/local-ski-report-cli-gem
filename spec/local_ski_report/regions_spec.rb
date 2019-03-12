@@ -18,6 +18,3 @@ RSpec.describe LocalSkiReport::Regions do
     end
   end
 end
-
-# test_case = ['1. MIDWEST', '2. NORTHEAST', '3. NORTHWEST', '4. ROCKIES', '5. SOUTHEAST', '6. WEST COAST']
-# test_case = ['1. Alaska', '2. Idaho', '3. Oregon', '4. Washington']
