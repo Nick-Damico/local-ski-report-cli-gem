@@ -46,11 +46,3 @@ RSpec.describe LocalSkiReport::Input do
     end
   end
 end
-
-# game = TicTacToe.new
-#  allow($stdout).to receive(:puts)
-#  allow(game).to receive(:over?).and_return(false, true)
-#
-#  expect(game).to receive(:gets).at_least(:once).and_return("1")
-#
-#  game.play
