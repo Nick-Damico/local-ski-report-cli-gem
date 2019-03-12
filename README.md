@@ -1,5 +1,8 @@
 # local_ski_report_cli_gem
 
+
+![Local Ski Report Gem](./public/images/local-ski-report-modal.jpg)
+
 CLI Gem for finding a ski resort or ski area report.
 This Ruby Gem provides a CLI for locating the most recent ski report from onthesnow.org. This gem allows the user to find a ski area by choosing a region, State, and finally a resort. Once a resort is selected a report is displayed.
 
