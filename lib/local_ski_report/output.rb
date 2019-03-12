@@ -46,9 +46,8 @@ class LocalSkiReport::Output
   def display_menu
     region_num = select_region
     state_num = select_state(region_num)
-    
-    user_state = get_state(region_num, user_region, state_num)
-    separator(50)
+
+    state_name = LocalSkiReport::Regions.get_state(region_num, state_num)
 
     select_resort(user_state)
     display_report

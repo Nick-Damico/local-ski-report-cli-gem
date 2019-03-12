@@ -13,12 +13,12 @@ class LocalSkiReport::Input
   end
 
   def number_selection
-    gets.chomp.to_i
+    gets.chomp.to_i - 1
   end
 
   def number_selection_with_msg(msg="Make a selection by type the number in console, press ENTER")
     puts "#{msg}: "
-    gets.chomp.to_i
+    gets.chomp.to_i - 1
   end
 
   def user_selection(msg, collection)

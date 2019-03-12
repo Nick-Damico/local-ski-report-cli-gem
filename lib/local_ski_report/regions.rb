@@ -17,4 +17,8 @@ class LocalSkiReport::Regions
     region_name = all_regions[region_number].downcase.to_sym
     REGIONS_WITH_RESORTS[region_name]
   end
+
+  def self.get_state(region_num, state_num)
+    all_states_in_region(region_num)[state_num]    
+  end
 end
