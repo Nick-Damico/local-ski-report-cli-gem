@@ -17,14 +17,15 @@ class LocalSkiReport::Input
   end
 
   def number_selection_with_msg(msg="Make a selection by type the number in console, press ENTER")
-    puts msg
+    puts "#{msg}: "
     gets.chomp.to_i
   end
 
-  def user_selection(msg, options)
+  def user_selection(msg, collection)
     user_selection = number_selection_with_msg(msg)
-    until correct_input_range(user_selection, options.length - 1)
+    until correct_input_range(user_selection, collection.length - 1)
       user_selection = number_selection
     end
+    user_selection
   end
 end

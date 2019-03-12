@@ -16,9 +16,33 @@ RSpec.describe LocalSkiReport::Input do
 
     it 'prompts a user to select a number' do
       allow($stdout).to receive(:puts)
-      allow(@input).to receive(:gets).at_least(:once).and_return("1")
+      allow(@input).to receive(:gets).at_least(:once).and_return('1')
 
       expect(@input.number_selection).to eq(1)
+    end
+  end
+
+  describe '#number_selection_with_msg' do
+    it 'displays supplied message to terminal' do
+      allow($stdout).to receive(:puts)
+
+      expect { @input.number_selection_with_msg('Make a selection') }.to output("Make a selection: \n").to_stdout
+    end
+
+    it 'prompts user for input, returns input as Fixnum' do
+      allow($stdout).to receive(:puts)
+      allow(@input).to receive(:gets).at_least(:once).and_return('2')
+
+      expect(@input.number_selection_with_msg("Make a selection")).to eq(2)
+    end
+  end
+
+  describe '#user_selection' do
+    it 'prompts user to make a selection from a range returns a Fixnum' do
+      allow($stdout).to receive(:puts)
+      allow(@input).to receive(:gets).at_least(:once).and_return("1")
+
+      expect(@input.user_selection('Make selection', ['Midwest', 'Northeast'])).to eq(1)
     end
   end
 end
