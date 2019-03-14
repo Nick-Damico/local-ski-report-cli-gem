@@ -1,22 +1,27 @@
 class LocalSkiReport::Output
   include Formattable
-  attr_reader :input
+  attr_reader :input, :artii
 
   def initialize
     @input = LocalSkiReport::Input.new
+    @artii = Artii::Base.new
+  end
+
+  def banner
+    separator(80)
+    puts artii.asciify('Local Ski Report')
+    separator(80)
   end
 
   def greeting
-    separator(40)
-    puts 'Welcome to Local Ski Report gem'
-    separator(40)
+    banner
     puts "Let's Get Your Local Ski Report"
-    puts ' '
+    puts ''
   end
 
   def invalid_selection(collection)
     separator(55)
-    puts "Invalid number. Please select a number between 1 - #{collection.length}: "
+    puts "Invalid selection. Please select a number between 1 - #{collection.length}: "
     separator(55)
   end
 
@@ -39,15 +44,25 @@ class LocalSkiReport::Output
 
   # Select methods may end up in ::Input classes responsibility
   def select_region
-    msg = 'Select a region to check? type number: '
+    msg = 'Select a region to check? type number'
     list_regions
-    input.user_selection(self, msg, LocalSkiReport::Regions.all_regions)
+    input.user_selection(msg, LocalSkiReport::Regions.all_regions, self)
   end
 
   def select_state(region_num)
     msg = 'Select a State to check? type number: '
     list_states(region_num)
     input.user_selection(msg, LocalSkiReport::Regions.all_states_in_region(region_num), self)
+  end
+
+  def display_xt_report
+    report = resort.reports.first
+    LocalSkiReport::Scraper.scrap_report_page(report)
+    puts report.xt_report
+  end
+
+  def display_report
+    puts @resort.reports.first.report
   end
 
   def display_menu
