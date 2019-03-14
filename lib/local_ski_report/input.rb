@@ -16,7 +16,7 @@ class LocalSkiReport::Input
 
   def user_selection(msg, collection, output)
     user_selection = number_selection_with_msg(msg)
-    until correct_input_range(user_selection, collection.length - 1)
+    until correct_input_range?(user_selection, collection.length - 1)
       output.invalid_selection(collection)
       user_selection = number_selection
     end
