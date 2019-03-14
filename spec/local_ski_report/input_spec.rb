@@ -14,11 +14,11 @@ RSpec.describe LocalSkiReport::Input do
       expect(@input.correct_input_range(10, 5)).to eq(false)
     end
 
-    it 'prompts a user to select a number' do
+    it 'prompts a user to select a number, accounts for 0 indexing returns Fixnum' do
       allow($stdout).to receive(:puts)
       allow(@input).to receive(:gets).at_least(:once).and_return('1')
 
-      expect(@input.number_selection).to eq(1)
+      expect(@input.number_selection).to eq(0)
     end
   end
 
@@ -29,20 +29,21 @@ RSpec.describe LocalSkiReport::Input do
       expect { @input.number_selection_with_msg('Make a selection') }.to output("Make a selection: \n").to_stdout
     end
 
-    it 'prompts user for input, returns input as Fixnum' do
+    it 'prompts user for input, accounts for 0 indexing returns input as Fixnum' do
       allow($stdout).to receive(:puts)
       allow(@input).to receive(:gets).at_least(:once).and_return('2')
 
-      expect(@input.number_selection_with_msg("Make a selection")).to eq(2)
+      expect(@input.number_selection_with_msg("Make a selection")).to eq(1)
     end
   end
 
   describe '#user_selection' do
-    it 'prompts user to make a selection from a range returns a Fixnum' do
+    it 'prompts user to make a selection from a range returns a Fixnum, accounts for 0 indexing' do
+      callback = LocalSkiReport::Output.new
       allow($stdout).to receive(:puts)
       allow(@input).to receive(:gets).at_least(:once).and_return("1")
 
-      expect(@input.user_selection('Make selection', ['Midwest', 'Northeast'])).to eq(1)
+      expect(@input.user_selection('Make selection', ['Midwest', 'Northeast'], callback)).to eq(0)
     end
   end
 end

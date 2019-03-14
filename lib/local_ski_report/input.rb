@@ -1,15 +1,8 @@
 class LocalSkiReport::Input
   include Formattable
 
-  def correct_input_range(input, max_length)
-    if input.between?(0, max_length)
-      true
-    else
-      separator(55)
-      puts "Invalid number. Please select a number between 1 - #{max_length}: "
-      separator(55)
-      false
-    end
+  def correct_input_range?(input, max_length)
+    input.between?(0, max_length)
   end
 
   def number_selection
@@ -21,11 +14,13 @@ class LocalSkiReport::Input
     gets.chomp.to_i - 1
   end
 
-  def user_selection(msg, collection)
+  def user_selection(msg, collection, output)
     user_selection = number_selection_with_msg(msg)
     until correct_input_range(user_selection, collection.length - 1)
+      output.invalid_selection(collection)
       user_selection = number_selection
     end
+
     user_selection
   end
 end
