@@ -22,7 +22,7 @@ RSpec.describe LocalSkiReport::Output do
       allow($stdout).to receive(:puts)
       allow(@output.input).to receive(:gets).at_least(:once).and_return("1")
 
-      expect(@output.select_region).to eq(1)
+      expect(@output.select_region).to eq(0)
     end
   end
 
@@ -32,7 +32,7 @@ RSpec.describe LocalSkiReport::Output do
       allow($stdout).to receive(:puts)
       allow(@output.input).to receive(:gets).at_least(:once).and_return("1")
 
-      expect(@output.select_state(1)).to eq(1)
+      expect(@output.select_state(1)).to eq(0)
     end
   end
 end
