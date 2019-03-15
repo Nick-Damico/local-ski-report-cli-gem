@@ -1,13 +1,23 @@
 class  LocalSkiReport::Resort
-    attr_accessor :name, :url, :location, :lifts, :reports
+    attr_accessor :name, :location, :snowfall, :url, :base_depth, :lifts, :open_acreage, :reports
 
     @@all = []
 
-    def initialize(name, url, location, lifts)
-        @reports = []
+    def initialize(
+      name:,
+      location:,
+      snowfall:,
+      url:,
+      base_depth:,
+      open_acreage:,
+      lifts:
+    )
         @name = name
-        @url = url
         @location = location
+        @snowfall = snowfall
+        @url = url
+        @base_depth = base_depth
+        @open_acreage = open_acreage
         @lifts = lifts
         @@all << self
     end
