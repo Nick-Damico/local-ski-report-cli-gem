@@ -7,6 +7,10 @@ class LocalSkiReport::Output
     @artii = Artii::Base.new
   end
 
+  def self.loading(counter)
+    print counter == 1 ? 'Loading' : '.'
+  end
+
   def banner
     separator(80)
     puts artii.asciify('Local Ski Report')
@@ -52,7 +56,12 @@ class LocalSkiReport::Output
   def select_state(region_num)
     msg = 'Select a State to check? type number: '
     list_states(region_num)
-    input.user_selection(msg, LocalSkiReport::Regions.all_states_in_region(region_num), self)
+
+    input.user_selection(
+      msg,
+      LocalSkiReport::Regions.all_states_in_region(region_num),
+      self
+    )
   end
 
   def display_xt_report
