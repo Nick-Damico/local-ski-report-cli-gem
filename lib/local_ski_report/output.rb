@@ -2,11 +2,11 @@ class LocalSkiReport::Output
   include Formattable
   attr_reader  :artii, :input, :region, :scraper
 
-  def initialize(input, region, scraper)
+  def initialize(args)
     @artii = Artii::Base.new
-    @input = input
-    @region = region
-    @scraper = scraper
+    @input = args[:input]
+    @region = args[:region]
+    @scraper = args[:scraper]
   end
 
   def self.loading(counter)

@@ -9,7 +9,10 @@ class LocalSkiReport::CLI
       @input = LocalSkiReport::Input.new
       @region = LocalSkiReport::Region.new
       @scraper = LocalSkiReport::Scraper.new
-      @output  = LocalSkiReport::Output.new(@input, @region, @scraper)
+      @output  = LocalSkiReport::Output.new(
+        input: @input,
+        region: @region,
+        scraper: @scraper)
     end
 
     def call

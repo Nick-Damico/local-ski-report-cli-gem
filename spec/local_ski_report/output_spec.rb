@@ -5,7 +5,11 @@ RSpec.describe LocalSkiReport::Output do
     @input = LocalSkiReport::Input.new
     @region = LocalSkiReport::Region.new
     @scraper = LocalSkiReport::Scraper.new
-    @output = LocalSkiReport::Output.new(@input, @region, @scraper)
+    @output = LocalSkiReport::Output.new(
+      input: @input,
+      region: @region,
+      scraper: @scraper
+    )
   end
   after(:all) do
     # Not working find a way to close browser after test complete
