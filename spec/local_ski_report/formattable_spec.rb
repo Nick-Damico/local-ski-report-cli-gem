@@ -15,7 +15,7 @@ RSpec.describe Formattable do
   describe '#numbered_collection' do
     it 'formats a collection into a numbered collection' do
       dc = DummyClass.new
-      region_collection = LocalSkiReport::Regions.all_states_in_region(2)
+      region_collection = LocalSkiReport::Region.all_states_in_region(2)
       expect(dc.numbered_collection(region_collection)).to eq(['1. Alaska', '2. Idaho', '3. Oregon', '4. Washington'])
     end
   end
