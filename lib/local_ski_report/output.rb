@@ -1,8 +1,9 @@
 class LocalSkiReport::Output
   include Formattable
-  attr_reader :input, :artii
+  attr_reader :input, :region, :artii
 
-  def initialize
+  def initialize(region)
+    @region = region
     @input = LocalSkiReport::Input.new
     @artii = Artii::Base.new
   end
@@ -37,12 +38,12 @@ class LocalSkiReport::Output
   end
 
   def list_regions
-    regions = LocalSkiReport::Regions.all_regions
+    regions = region.all_regions
     numbered_collection(regions).each { |region| puts region }
   end
 
   def list_states(num)
-    states = LocalSkiReport::Regions.all_states_in_region(num)
+    states = region.all_states_in_region(num)
     numbered_collection(states).each { |state| puts state }
   end
 
@@ -50,7 +51,7 @@ class LocalSkiReport::Output
   def select_region
     msg = 'Select a region to check? type number'
     list_regions
-    input.user_selection(msg, LocalSkiReport::Regions.all_regions, self)
+    input.user_selection(msg, region.all_regions, self)
   end
 
   def select_state(region_num)
@@ -59,7 +60,7 @@ class LocalSkiReport::Output
 
     input.user_selection(
       msg,
-      LocalSkiReport::Regions.all_states_in_region(region_num),
+      region.all_states_in_region(region_num),
       self
     )
   end
@@ -78,7 +79,7 @@ class LocalSkiReport::Output
     region_num = select_region
     state_num = select_state(region_num)
 
-    state_name = LocalSkiReport::Regions.get_state(region_num, state_num)
+    state_name = region.get_state(region_num, state_num)
 
     select_resort(user_state)
     display_report

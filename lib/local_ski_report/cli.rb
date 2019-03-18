@@ -1,17 +1,21 @@
 # Our CLI Controller
 class LocalSkiReport::CLI
     attr_accessor :resort
-    attr_reader :scraper, :output
+    attr_reader :scraper, :output, :scraper, :region_num, :state_num
 
     def initialize
       # LocalSkiReport::Scraper.scrap_resorts_page('united-states')
       # @scraper = LocalSkiReport::Scraper.new
-      @output  = LocalSkiReport::Output.new
+      @scraper = LocalSkiReport::Scraper.new
+      @region = LocalSkiReport::Region.new
+      @output  = LocalSkiReport::Output.new(@region)
     end
 
     def call
       output.greeting
-      output.select_region
+      # region_num = output.select_region
+      # state_num = output.select_state(region_num)
+      scraper.scrape_usa_resorts
     end
 
     def menu
