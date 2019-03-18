@@ -1,11 +1,12 @@
 class LocalSkiReport::Output
   include Formattable
-  attr_reader :input, :region, :artii
+  attr_reader  :artii, :input, :region, :scraper
 
-  def initialize(region)
-    @region = region
-    @input = LocalSkiReport::Input.new
+  def initialize(input, region, scraper)
     @artii = Artii::Base.new
+    @input = input
+    @region = region
+    @scraper = scraper
   end
 
   def self.loading(counter)
@@ -67,7 +68,7 @@ class LocalSkiReport::Output
 
   def display_xt_report
     report = resort.reports.first
-    LocalSkiReport::Scraper.scrap_report_page(report)
+    @scraper.scrap_report_page(report)
     puts report.xt_report
   end
 

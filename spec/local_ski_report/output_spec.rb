@@ -1,9 +1,15 @@
 require 'spec_helper'
 
 RSpec.describe LocalSkiReport::Output do
-  before(:each) do
+  before(:all) do
+    @input = LocalSkiReport::Input.new
     @region = LocalSkiReport::Region.new
-    @output = LocalSkiReport::Output.new(@region)
+    @scraper = LocalSkiReport::Scraper.new
+    @output = LocalSkiReport::Output.new(@input, @region, @scraper)
+  end
+  after(:all) do
+    # Not working find a way to close browser after test complete
+    @scraper.browser.close
   end
   describe '#list_regions' do
     it 'outputs to terminal a numbered list of regions' do

@@ -38,8 +38,13 @@ RSpec.describe LocalSkiReport::Input do
   end
 
   describe '#user_selection' do
+    before do
+      @input = LocalSkiReport::Input.new
+      @scraper = LocalSkiReport::Scraper.new
+      @region = LocalSkiReport::Region.new
+    end
     it 'prompts user to make a selection from a range returns a Fixnum, accounts for 0 indexing' do
-      callback = LocalSkiReport::Output.new
+      callback = LocalSkiReport::Output.new(@input, @region, @scraper)
       allow($stdout).to receive(:puts)
       allow(@input).to receive(:gets).at_least(:once).and_return("1")
 

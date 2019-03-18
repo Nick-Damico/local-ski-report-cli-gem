@@ -6,9 +6,10 @@ class LocalSkiReport::CLI
     def initialize
       # LocalSkiReport::Scraper.scrap_resorts_page('united-states')
       # @scraper = LocalSkiReport::Scraper.new
-      @scraper = LocalSkiReport::Scraper.new
+      @input = LocalSkiReport::Input.new
       @region = LocalSkiReport::Region.new
-      @output  = LocalSkiReport::Output.new(@region)
+      @scraper = LocalSkiReport::Scraper.new
+      @output  = LocalSkiReport::Output.new(@input, @region, @scraper)
     end
 
     def call
