@@ -10,7 +10,10 @@
 /test/version_tmp/
 /tmp/
 
+./public/onthesnow/*
 .rspec_status
+/public/onthesnow/*
+public/onthesnow/*
 
 # Used by dotenv library to load environment variables.
 # .env
