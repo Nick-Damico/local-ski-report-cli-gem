@@ -38,16 +38,6 @@ class LocalSkiReport::Output
     separator(60)
   end
 
-  def list_regions
-    regions = region.all_regions
-    numbered_collection(regions).each { |region| puts region }
-  end
-
-  def list_states(num)
-    states = region.all_states_in_region(num)
-    numbered_collection(states).each { |state| puts state }
-  end
-
   # Select methods may end up in ::Input classes responsibility
   def select_region
     msg = 'Select a region to check? type number'
@@ -64,6 +54,17 @@ class LocalSkiReport::Output
       region.all_states_in_region(region_num),
       self
     )
+  end
+
+  private
+  def list_regions
+    regions = region.all_regions
+    numbered_collection(regions).each { |region| puts region }
+  end
+
+  def list_states(num)
+    states = region.all_states_in_region(num)
+    numbered_collection(states).each { |state| puts state }
   end
 
   def display_xt_report
