@@ -14,4 +14,8 @@ module Formattable
   def separator(num)
     puts '-' * num
   end
+
+  def urlify(string)
+    string.downcase.gsub(' ', '_')
+  end
 end

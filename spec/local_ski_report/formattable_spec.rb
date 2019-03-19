@@ -15,8 +15,18 @@ RSpec.describe Formattable do
   describe '#numbered_collection' do
     it 'formats a collection into a numbered collection' do
       dc = DummyClass.new
-      region_collection = LocalSkiReport::Region.all_states_in_region(2)
+      region = LocalSkiReport::Region.new
+      region_collection = region.all_states_in_region(2)
       expect(dc.numbered_collection(region_collection)).to eq(['1. Alaska', '2. Idaho', '3. Oregon', '4. Washington'])
+    end
+  end
+
+  describe '#urlify' do
+    it 'takes the name of a state as an argument, formats them for url queries' do
+      dc = DummyClass.new
+      expect(dc.urlify('Tennessee')).to eq('tennessee')
+      expect(dc.urlify('North Carolina')).to eq('north_carolina')
+      expect(dc.urlify('New York')).to eq('new_york')
     end
   end
 end
