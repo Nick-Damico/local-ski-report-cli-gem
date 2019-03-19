@@ -1,38 +1,28 @@
 class LocalSkiReport::Scraper
-  ONTHESNOW_URL = 'https://www.onthesnow.com/united-states/skireport.html'
-  ONTHESNOW_FILE_DIR = './public/onthesnow/resorts_in_usa.html'
-  attr_reader :browser, :file_usa
+  include Formattable
+  ONTHESNOW_URL = 'https://www.onthesnow.com/united-states/skireport.html'.freeze
+  ONTHESNOW_FILE_DIR = './public/onthesnow/'.freeze
+  attr_reader :browser, :file_usa, :parsed_html
 
   def initialize
     @browser = Watir::Browser.new(
       :chrome, chromeOptions: { args: ['--headless', '--window-size=1200x600'] }
     )
-    @file_usa = File.exist?(ONTHESNOW_FILE_DIR)
-  end
-
-  def create_resort_report(table)
-    table.collect do |row|
-      new_resort = LocalSkiReport::Resort.create(row)
-      new_report = LocalSkiReport::Report.create(row)
-      new_resort.add_report(new_report)
-      new_resort
-    end
-  end
-
-  def extract_table(html)
-    table = html.css('table')
-    table_rows = table.css('tr')
-    table_rows.slice(2, table_rows.size - 3)
+    @file_usa = File.exist?(ONTHESNOW_FILE_DIR + 'resorts_in_usa.html') ? File.open(ONTHESNOW_FILE_DIR + 'resorts_in_usa.html') : nil
   end
 
   def scrape_usa_resorts
-    html = long_scrape.html
-    write_to_file(html)
-    # table = get_table(html)
-    # create_resort_report(table)
+    html = if file_usa
+             File.read(file_usa.path)
+           else
+             write_to_file(long_scrape.html, 'resorts_in_usa.html')
+    end
+    parsed_html = nokogirify(html)
+    build_resorts(parsed_html)
   end
 
-  def scrape_state_resorts(state_url)
+  def scrape_state_resorts(state_name)
+    state_url = urlify(state_name)
     url = "https://www.onthesnow.com/#{state_url}/skireport.html"
   end
 
@@ -43,23 +33,73 @@ class LocalSkiReport::Scraper
   end
 
   private
-    def long_scrape
-      browser.goto(ONTHESNOW_URL)
-      browser.execute_script('window.scrollBy(0, 1450)')
-      32.times do
-        browser.execute_script('window.scrollBy(0, 730)')
-        sleep(3)
-      end
-      browser
-    end
+  def build_resorts(html)
+    resorts_table = extract_table(html)
+    table_rows = resorts_table.css('tr')
+    table_rows.each do |row|
+      resort_hash = scrape_resort(row)
+      # Possibly move this dependency out of the Scraper Class
+      LocalSkiReport::Resort.new(resort_hash)
+    end    
+  end
 
-    def nokogirify(html)
-      Nokogiri::HTML(html)
-    end
-
-    def write_to_file(html)
-      file = File.open(ONTHESNOW_FILE_DIR, 'w') do |f|
-        f.puts html
+  def scrape_resort(row)
+    resort_args = {}
+    extract_data_cells_from_row(row).each.with_index do |td, index|
+      case index
+      when 0
+        resort_args[:name] = td.css('div.name a').text
+        resort_args[:location] = td.css('div.rRegion').text.gsub(', USA', '')
+        resort_args[:l_update] = td.css('div.lUpdate').text.split(' ').last
+      when 1
+        # Logic for if Resort is Open : Closed
+      when 2
+        hourly_snowfall = td.css('div b').text.tr('"', ' ').split(' ')
+        resort_args[:snowfall] = {
+          twenty_four: hourly_snowfall[0],
+          seventy_two: hourly_snowfall[1]
+        }
+      when 3
+        resort_args[:base_depth] = td.css('.link-light b').text.delete('"')
+      when 4
+        resort_args[:lifts] = td.css('div').text
+      when 5
+        resort_args[:open_acreage] = td.css('div').text
       end
+    end # End of loop
+    resort_args
+  end
+
+  def extract_table(html)
+    html.css('#resort-list-wrapper .resortList tbody')
+  end
+
+  def extract_data_cells_from_row(row)
+    table_data_cells = row.css('td')
+    table_data_cells.slice(0, table_data_cells.length - 2)
+  end
+
+  def long_scrape
+    browser.goto(ONTHESNOW_URL)
+    browser.execute_script('window.scrollBy(0, 1450)')
+    puts 'This may take up to a min to complete.'
+    counter = 1
+    24.times do
+      browser.execute_script('window.scrollBy(0, 730)')
+      sleep(2)
+      LocalSkiReport::Output.loading(counter)
+      counter += 1
     end
+    browser
+  end
+
+  def nokogirify(html)
+    Nokogiri::HTML(html)
+  end
+
+  def write_to_file(html, filename)
+    file_usa = File.open(ONTHESNOW_FILE_DIR + filename, 'w') do |f|
+      f.puts html
+    end
+  end
 end
