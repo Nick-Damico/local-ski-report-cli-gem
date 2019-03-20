@@ -42,9 +42,9 @@ class LocalSkiReport::Scraper
     end
   end
 
-  def extract_data_cells_from_row(row)
+  def extract_data_cells_from_row(row, adjustment = 0)
     table_data_cells = row.css('td')
-    table_data_cells.slice(0, table_data_cells.length - 2)
+    table_data_cells.slice(0, table_data_cells.length - adjustment)
   end
 
   def extract_table(html, selector)
@@ -53,10 +53,11 @@ class LocalSkiReport::Scraper
 
   def scrape_resort(row)
     resort_args = {}
-    extract_data_cells_from_row(row).each.with_index do |td, index|
+    extract_data_cells_from_row(row, 2).each.with_index do |td, index|
       case index
       when 0
         resort_args[:name] = td.css('div.name a').text
+        resort_args[:url] = td.css('div.name a').attr('href').value
         resort_args[:location] = td.css('div.rRegion').text.gsub(', USA', '')
         resort_args[:l_update] = td.css('div.lUpdate').text.split(' ').last
       when 1
@@ -75,6 +76,7 @@ class LocalSkiReport::Scraper
         resort_args[:open_acreage] = td.css('div').text
       end
     end # End of loop
+    
     resort_args
   end
 
