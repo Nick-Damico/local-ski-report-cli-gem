@@ -17,8 +17,7 @@ class LocalSkiReport::Scraper
            else
              write_to_file(long_scrape.html, 'resorts_in_usa.html')
     end
-    parsed_html = nokogirify(html)
-    build_resorts(parsed_html)
+    build_resorts(nokogirify(html))
   end
 
   def scrape_state_resorts(state_name)
@@ -34,13 +33,22 @@ class LocalSkiReport::Scraper
 
   private
   def build_resorts(html)
-    resorts_table = extract_table(html)
+    resorts_table = extract_table(html, '#resort-list-wrapper .resortList tbody')
     table_rows = resorts_table.css('tr')
     table_rows.each do |row|
       resort_hash = scrape_resort(row)
       # Possibly move this dependency out of the Scraper Class
       LocalSkiReport::Resort.new(resort_hash)
-    end    
+    end
+  end
+
+  def extract_data_cells_from_row(row)
+    table_data_cells = row.css('td')
+    table_data_cells.slice(0, table_data_cells.length - 2)
+  end
+
+  def extract_table(html, selector)
+    html.css(selector)
   end
 
   def scrape_resort(row)
@@ -68,15 +76,6 @@ class LocalSkiReport::Scraper
       end
     end # End of loop
     resort_args
-  end
-
-  def extract_table(html)
-    html.css('#resort-list-wrapper .resortList tbody')
-  end
-
-  def extract_data_cells_from_row(row)
-    table_data_cells = row.css('td')
-    table_data_cells.slice(0, table_data_cells.length - 2)
   end
 
   def long_scrape
