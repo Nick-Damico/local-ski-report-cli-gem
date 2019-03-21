@@ -36,7 +36,7 @@ class  LocalSkiReport::Resort
     end
 
     def self.find_by_location(location)
-        self.all.find_all { |resort| resort.location == location }
+        all.select { |resort| resort.location == location }
     end
 
     def self.sort_by_lifts_desc
