@@ -21,44 +21,6 @@ class LocalSkiReport::Report
         @@all.clear
     end
 
-    def self.create(html)
-        date = html.css('div.lUpdate').text
-        url =  html.css('td')[3].css('a').first['href']
-        status = self.get_status(html.css('td')[1].css('div').first['class'].split(" ").pop)
-        if html.css('td')[2].css('b')[0]
-            new_snow = html.css('td')[2].css('b')[0].text
-        else
-            new_snow = 'N/A'
-        end
-        base = html.css('td')[3].css('b')[0].text
-        lifts_open = self.get_lift_status(html)
-        self.new(date, url, status, new_snow, base, lifts_open)
-    end
-
-    def self.get_lift_status(html)
-        if html.css('td')[4].text.split("/").first == ""
-            0
-        else
-            html.css('td')[4].text.split("/").first
-        end
-    end
-
-    def self.get_status(state)
-        case state
-        when "stateD1"
-            "Open"
-        when "stateD2"
-            "Closed"
-        else
-            "Weekends Only"
-        end
-    end
-
-    def get_ticket_prices(row)
-        arr = row.css('td').text.gsub("US","").split
-        [arr[1], arr[3]]
-    end
-
     def report
         rows = []
         rows << [self.resort.name, {:value => self.date, :alignment => :center}, self.status, {:value => self.new_snow, :alignment => :center},{:value => self.base, :alignment => :center}, {:value => "#{self.lifts_open}/#{resort.lifts}", :alignment => :right}]
@@ -81,5 +43,5 @@ class LocalSkiReport::Report
         table = Terminal::Table.new :title => "#{self.resort.name} Full Report", :rows => rows
         table.style = {:all_separators => true}
         table
-    end  
+    end
 end
