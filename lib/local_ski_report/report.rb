@@ -1,16 +1,17 @@
 class LocalSkiReport::Report
-    attr_accessor :date, :url, :status, :new_snow, :base, :lifts_open, :resort, :elevation, :trails, :tickets
+    attr_accessor :base_depth, :lifts, :location, :name, :open_acreage, :snowfall, :url
 
     @@all = []
 
-    def initialize(date, url, status, new_snow, base, lifts_open)
-        @date = date
-        @url = url
-        @status = status
-        @new_snow = new_snow
-        @base = base
-        @lifts_open = lifts_open
-        @@all << self
+    def initialize(resort)
+      @base_depth = resort.base_depth
+      @lifts = resort.lifts
+      @l_update = resort.l_update
+      @open_acreage = resort.open_acreage
+      @name = resort.name
+      @snowfall = resort.snowfall
+      @url = resort.url
+      @@all << self
     end
 
     def self.all
