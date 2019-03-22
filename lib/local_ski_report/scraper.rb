@@ -58,7 +58,7 @@ class LocalSkiReport::Scraper
       when 0
         resort_args[:name] = td.css('div.name a').text
         resort_args[:url] = td.css('div.name a').attr('href').value
-        resort_args[:location] = td.css('div.rRegion').text.gsub(', USA', '')
+        resort_args[:location] = td.css('div.rRegion').text.gsub(', USA', '')        
         resort_args[:l_update] = td.css('div.lUpdate').text.split(' ').last
       when 1
         # Logic for if Resort is Open : Closed
@@ -76,7 +76,7 @@ class LocalSkiReport::Scraper
         resort_args[:open_acreage] = td.css('div').text
       end
     end # End of loop
-    
+
     resort_args
   end
 

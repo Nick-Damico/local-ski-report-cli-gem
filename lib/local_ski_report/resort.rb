@@ -11,6 +11,7 @@ class  LocalSkiReport::Resort
         @base_depth = args[:base_depth]
         @open_acreage = args[:open_acreage]
         @lifts = args[:lifts]
+        @l_update = args[:l_update]
         @@all << self
     end
 
