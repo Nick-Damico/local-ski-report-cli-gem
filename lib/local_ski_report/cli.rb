@@ -23,7 +23,9 @@ class LocalSkiReport::CLI
     def call
       output.greeting
       state_name = select_region_state
-      resort_selection(state_name)
+      resort = resort_selection(state_name)
+      report = LocalSkiReport::Report.new(resort)
+      output.display_report(report)
     end
 
     def select_region_state
@@ -31,6 +33,7 @@ class LocalSkiReport::CLI
       state_num = output.select_state(region_num)
       # Returns state name ex. 'Tennessee'
       region.get_state(region_num, state_num)
+
     end
 
     def resort_selection(state_name)
