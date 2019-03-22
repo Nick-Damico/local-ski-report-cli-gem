@@ -3,10 +3,10 @@ class LocalSkiReport::Region
 
   REGIONS_WITH_RESORTS = {
     midwest: %w[Illinois Indiana Iowa Kansas Michigan Minnesota Missouri Ohio Wisconsin],
-    northeast: %w[Connecticut Maine Massachusetts New Hampshire New Jersey New York Pennsylvania Rhode Island Vermont],
+    northeast: ["Connecticut", "Maine", "Massachusetts", "New Hampshire", "New Jersey", "New York", "Pennsylvania", "Rhode Island", "Vermont"],
     northwest: %w[Alaska Idaho Oregon Washington],
-    rockies: %w[Colorado Montana New Mexico Utah Wyoming],
-    southeast: %w[Alabama Georgia Maryland North Carolina Tennessee Virginia West Virginia],
+    rockies: ["Colorado", "Montana", "New Mexico", "Utah", "Wyoming"],
+    southeast: ["Maryland", "North Carolina", "Tennessee", "Virginia", "West Virginia"],
     west_coast: %w[Arizona California Nevada]
   }.freeze
 
