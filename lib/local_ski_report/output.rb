@@ -19,6 +19,10 @@ class LocalSkiReport::Output
     separator(80)
   end
 
+  def display_report(report)
+    puts report.report
+  end
+
   def greeting
     banner
     puts "Let's Get Your Local Ski Report"
@@ -86,10 +90,6 @@ class LocalSkiReport::Output
     report = resort.reports.first
     @scraper.scrap_report_page(report)
     puts report.xt_report
-  end
-
-  def display_report
-    puts @resort.reports.first.report
   end
 
   def display_menu
