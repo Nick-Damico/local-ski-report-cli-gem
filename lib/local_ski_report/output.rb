@@ -60,11 +60,12 @@ class LocalSkiReport::Output
   def select_resort(resorts)
     list_resorts(resorts)
 
-    input.user_selection(
+    selection = input.user_selection(
       'Select a Resort',
       resorts,
       self
     )
+    resorts[selection]
   end
 
   def list_regions
