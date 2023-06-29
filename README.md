@@ -39,6 +39,8 @@ After starting the Ski Report CLI Gem, follow the prompts to search for ski area
 
 ## ChangeLog
 
+### Version 0.1.5
+
 The recent update of the LocalSkiReport Gem includes the following enhancements:
 
 - Complete rewrite: The application has been restructured to follow best practices and improve code organization.
@@ -46,12 +48,6 @@ The recent update of the LocalSkiReport Gem includes the following enhancements:
 - Introduction of RSPEC testing: The gem now incorporates RSPEC tests to verify the functionality and reliability of the application.
 
 - Fixing the Scraper class: The Scraper class has been fixed to address issues caused by the recent update of onthesnow.org to React.js. The scraper can now successfully retrieve data from the website.
-
-### Version 0.1.5
-
-Is a full rewrite of the LocalSkiReport GEM into a better structured application with RSPEC supported testing.
-
-Fixing application breaking Scraper class that no longer was able to retrieve data from onthesnow.org due to the site updating the front end to React.js.
 
 ## Contributing
 
